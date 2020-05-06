@@ -1,1 +1,5 @@
-.idea
+/**/.idea
+/**/*.iml
+/**/target
+/**/node_modules
+/**/disk

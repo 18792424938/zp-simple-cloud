@@ -1,0 +1,30 @@
+server:
+  port: 9000
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:7000/eureka
+spring:
+  application:
+    name: simple-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启动态路由 利用微服务名进行路由
+      routes:
+        - id: simple-module-auth
+          uri: lb://simple-module-auth
+          predicates:
+            - Path=/auth/**
+        - id: simple-module-sys
+          uri: lb://simple-module-sys
+          predicates:
+            - Path=/sys/**
+
+logging:
+  level:
+    com.zp: debug
