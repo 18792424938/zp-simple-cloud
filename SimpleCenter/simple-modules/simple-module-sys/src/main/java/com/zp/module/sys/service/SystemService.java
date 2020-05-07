@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 import com.zp.api.sys.entity.SystemEntity;
+import com.zp.common.core.util.PagerUtil;
 
 import java.util.List;
 
@@ -18,9 +19,11 @@ import java.util.List;
  */
 public interface SystemService extends IService<SystemEntity> {
 
-    IPage<SystemEntity> queryPage(SystemEntity System, IPage<SystemEntity> page);
+    IPage<SystemEntity> queryPage(SystemEntity System, PagerUtil pagerUtil);
 
     List<SystemEntity> treeMenu();
+
+    void removeMyByIds(List<String> ids);
 
 
 

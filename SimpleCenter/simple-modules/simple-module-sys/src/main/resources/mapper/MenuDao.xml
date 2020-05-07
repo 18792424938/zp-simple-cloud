@@ -62,7 +62,7 @@
         <where>
             parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
         </where>
-        order by order_num
+        order by order_num,create_date
     </select>
     <select id="treeChildren"  resultMap="treeData">
         select
@@ -92,7 +92,7 @@
         <where>
             parent_id = #{pid,jdbcType=VARCHAR}
         </where>
-        order by order_num
+        order by order_num,create_date
     </select>
 
 

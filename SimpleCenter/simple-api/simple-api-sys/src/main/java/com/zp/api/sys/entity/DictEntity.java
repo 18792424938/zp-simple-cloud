@@ -45,10 +45,10 @@ public class DictEntity implements Serializable {
 	@ApiModelProperty("创建人")
 	private String createId;
 	/**
-	 * 排序 数字越大越靠前
+	 * 描述
 	 */
 	@TableField("description") 
-	@ApiModelProperty("排序 数字越大越靠前")
+	@ApiModelProperty("描述")
 	private String description;
 	/**
 	 * 名称
