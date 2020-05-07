@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zp.api.sys.entity.RoleMenuEntity;
 
+import java.util.List;
+
 
 /**
  * 角色系统表
@@ -15,5 +17,8 @@ import com.zp.api.sys.entity.RoleMenuEntity;
 public interface RoleMenuService extends IService<RoleMenuEntity> {
 
     IPage<RoleMenuEntity> queryPage(RoleMenuEntity RoleMenu, IPage<RoleMenuEntity> page);
+
+    List<String> getMenuIds(String roleid);
+
 }
 

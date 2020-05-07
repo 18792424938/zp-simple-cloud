@@ -70,18 +70,12 @@ public class MenuController {
     /**
      * 树形菜单
      */
-    @GetMapping("/tree")
+    @GetMapping("/tree/{systemId}")
     @ApiOperation("菜单表列表")
     @ApiResponse(code = 0, message = "查询成功", response = MenuEntity.class)
-    public R tree() {
-        QueryWrapper<SystemEntity> systemEntityQueryWrapper = new QueryWrapper<>();
-        systemEntityQueryWrapper.orderByDesc("create_date");
-        List<SystemEntity> systemEntityList = systemService.list(systemEntityQueryWrapper);
-        for (SystemEntity systemEntity : systemEntityList) {
-            List<MenuEntity> tree = menuService.tree(systemEntity.getId());
-            systemEntity.setChildren(tree);
-        }
-        return R.ok().setData(systemEntityList);
+    public R tree(@PathVariable("systemId") String systemId) {
+        List<MenuEntity> tree = menuService.tree(systemId);
+        return R.ok().setData(tree);
     }
 
 
@@ -116,6 +110,24 @@ public class MenuController {
         menu.setUpdateId(userId);
         menu.setUpdateDate(date);
         menuService.save(menu);
+
+        return R.ok();
+    }
+
+    /**
+     * 修改
+     */
+    @PostMapping("/update")
+    @RequiresPermissions("sys:menu:update")
+    @ApiOperation("修改菜单表信息")
+    public R<Object> update(@RequestBody MenuEntity menu) {
+        String userId = authUtils.getUserId();
+        Date date = new Date();
+
+        menu.setUpdateId(userId);
+        menu.setUpdateDate(date);
+
+        menuService.updateById(menu);
 
         return R.ok();
     }

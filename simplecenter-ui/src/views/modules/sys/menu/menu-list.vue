@@ -1,6 +1,14 @@
 <template>
   <div class="main-config">
     <div class="button-group">
+      <el-select v-model="systemId" @change="systemChange" placeholder="请选择" clearable>
+        <el-option
+          v-for="item in systemList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
       <el-button type="primary" @click="addOrUpdateView()">新增</el-button>
     </div>
     <!--:default-expand-all="true" 默认展开全部-->
@@ -89,16 +97,6 @@
         <el-form-item label="名称:" prop="name">
           <el-input v-model="menuForm.name" placeholder="请输入" clearable></el-input>
         </el-form-item>
-        <el-form-item label="所属系统:" prop="systemId">
-          <el-select v-model="menuForm.systemId" @change="systemChange" placeholder="请选择" clearable>
-            <el-option
-              v-for="item in systemList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="上级菜单:" prop="parentId">
           <el-popover
             placement="bottom"
@@ -169,6 +167,7 @@
         systemList: [],
         menuTree:[],
         popoverVisible:false,
+        systemId:"",
         menuForm: {
           id: "",
           name: "",
@@ -197,22 +196,18 @@
           orderNum: [
             {required: true, message: '请输入排序号', trigger: 'blur'},
           ],
-          systemId: [
-            {required: true, message: '请选择所属系统', trigger: 'change'},
-          ],
 
         }
       }
     },
     activated() {
-      this.getTree();
-
+      this.getSystemAll();
     },
     methods: {
       getTree() {
         this.tableloading = true;
         this.$http({
-          url: `/sys/menu/tree`,
+          url: `/sys/menu/tree/${this.systemId}`,
           method: 'get'
         }).then(({data}) => {
           if (data.code == 0 && data.data) {
@@ -229,6 +224,11 @@
         }).then(({data}) => {
           if (data.code == 0 && data.data) {
             this.systemList = data.data
+            if(this.systemList&&this.systemList.length){
+              this.systemId = this.systemList[0].id
+              this.getTree();
+            }
+
           }
         }).finally((res) => {
 
@@ -236,17 +236,15 @@
       },
       // 选择系统 查询对应的菜单
       systemChange(val) {
-        this.menuForm.parentName = ""
-        this.menuForm.parentId = ""
-        this.menuTree = [];
+        this.getTree();
       },
       //显示上级菜单选择
       popoverShow(){
-        if(this.menuForm.systemId&&this.menuTree.length==0){
+        if(this.systemId){
           this.$http({
             url: `/sys/menu/menuTree`,
             method: 'get',
-            params: this.$http.adornParams({systemId:this.menuForm.systemId})
+            params: this.$http.adornParams({systemId:this.systemId})
           }).then(({data}) => {
             if (data.code == 0 && data.data) {
               this.menuTree = data.data
@@ -263,11 +261,11 @@
       },
       //新增或者修改
       addOrUpdateView(row) {
+        if(!this.systemId){
+          this.$message.error("请选择系统")
+        }
         this.menuForm.parentId = ""
         this.menuForm.parentName = ''
-        this.menuTree = [];
-        //获取所有系统
-        this.getSystemAll();
 
         this.dialogVisible = true;
         this.$nextTick(() => {
@@ -285,7 +283,7 @@
           }).finally((res) => {
             this.menuFormloading = false;
           })
-        } else {
+        } else {//新增
           this.menuFormloading = false;
         }
 
@@ -296,6 +294,7 @@
         this.$refs["menuForm"].validate((valid) => {
           if (valid) {
             this.menuFormloading = true;
+            this.menuForm.systemId = this.systemId
             this.$http({
               url: `/sys/menu/${this.menuForm.id?'update':'save'}`,
               method: 'post',

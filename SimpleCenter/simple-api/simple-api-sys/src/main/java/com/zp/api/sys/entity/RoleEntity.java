@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -75,5 +76,13 @@ public class RoleEntity implements Serializable {
 	@TableField("update_id") 
 	@ApiModelProperty("修改人")
 	private String updateId;
- 
+
+	@TableField(exist = false)
+	@ApiModelProperty("系统id集合")
+	private List<String> systemIds;
+
+	@TableField(exist = false)
+	@ApiModelProperty("菜单id集合")
+	private List<String> menuIds;
+
 }

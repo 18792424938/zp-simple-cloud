@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 import com.zp.api.sys.entity.SystemEntity;
- 
+
+import java.util.List;
+
 
 /**
  * 系统表
@@ -17,5 +19,10 @@ import com.zp.api.sys.entity.SystemEntity;
 public interface SystemService extends IService<SystemEntity> {
 
     IPage<SystemEntity> queryPage(SystemEntity System, IPage<SystemEntity> page);
+
+    List<SystemEntity> treeMenu();
+
+
+
 }
 

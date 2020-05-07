@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.zp.api.sys.entity.RoleSystemEntity;
- 
+
+import java.util.List;
+
 
 /**
  * 角色系统表
@@ -16,5 +18,8 @@ import com.zp.api.sys.entity.RoleSystemEntity;
 public interface RoleSystemService extends IService<RoleSystemEntity> {
 
     IPage<RoleSystemEntity> queryPage(RoleSystemEntity RoleSystem, IPage<RoleSystemEntity> page);
+
+    List<String> getSystemIds(String roleid);
+
 }
 

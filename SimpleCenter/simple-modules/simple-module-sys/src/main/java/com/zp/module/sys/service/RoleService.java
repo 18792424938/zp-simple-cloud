@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 import com.zp.api.sys.entity.RoleEntity;
- 
+import com.zp.common.core.util.PagerUtil;
+
+import java.util.List;
+
 
 /**
  * 角色表
@@ -16,6 +19,9 @@ import com.zp.api.sys.entity.RoleEntity;
  */
 public interface RoleService extends IService<RoleEntity> {
 
-    IPage<RoleEntity> queryPage(RoleEntity Role, IPage<RoleEntity> page);
+    IPage<RoleEntity> queryPage(RoleEntity Role, PagerUtil pagerUtil);
+    void saveAuth(RoleEntity roleEntity);
+    void updateAuth(RoleEntity roleEntity);
+    void removeByMyIds(List<String> list);
 }
 

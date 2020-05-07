@@ -62,6 +62,7 @@
         <where>
             parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
         </where>
+        order by order_num
     </select>
     <select id="treeChildren"  resultMap="treeData">
         select
@@ -70,6 +71,7 @@
         <where>
             parent_id = #{pid,jdbcType=VARCHAR}
         </where>
+        order by order_num
     </select>
 
 
@@ -81,6 +83,7 @@
         <where>
             parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
         </where>
+        order by order_num
     </select>
     <select id="navChildren"  resultMap="navData">
         select
@@ -89,6 +92,7 @@
         <where>
             parent_id = #{pid,jdbcType=VARCHAR}
         </where>
+        order by order_num
     </select>
 
 
