@@ -4,8 +4,8 @@ import Vue from "vue";
 
 export function clearUser () {
   sessionStorage.removeItem("menuList")
+  sessionStorage.removeItem("token")
   store.commit(DELUSER)
   store.commit(DELMENUROUTE)
-  console.log("Vue.cookie.",Vue.cookie)
   Vue.cookie.remove('token')
 }

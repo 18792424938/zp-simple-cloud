@@ -2,10 +2,11 @@ package com.zp.common.security.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zp.api.auth.vo.TokenVO;
+import com.zp.common.config.config.FeignConfig;
 import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.JwtUtil;
 import com.zp.common.security.annotation.RequiresPermissions;
-import com.zp.common.security.config.FeignConfig;
+
 import com.zp.common.security.utils.AnonsUtils;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.common.security.utils.HttpContextUtils;

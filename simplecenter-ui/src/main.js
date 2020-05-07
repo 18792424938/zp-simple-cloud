@@ -9,15 +9,14 @@ import http from './utils/httpRequest'
 import {clearUser} from './utils/userUtil'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-//import '@assets/scss/_common.css';
-
+import '@/assets/scss/_common.css';
 import App from './App'
 
 Vue.config.productionTip = false
 
 
 // 安装ElementUI
-Vue.use(ElementUI)
+Vue.use(ElementUI,{ size: 'small', zIndex: 3000 })
 
 Vue.use(VueCookie)
 

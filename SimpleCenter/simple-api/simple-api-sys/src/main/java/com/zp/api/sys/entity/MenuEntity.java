@@ -94,6 +94,11 @@ public class MenuEntity implements Serializable {
 	@TableField("parent_id") 
 	@ApiModelProperty("父id")
 	private String parentId;
+
+	@TableField(exist = false)
+	@ApiModelProperty("父菜单名称")
+	private String parentName;
+
 	/**
 	 * 权限码
 	 */
@@ -133,9 +138,9 @@ public class MenuEntity implements Serializable {
 	/**
 	 * 地址栏显示路径
 	 */
-	@TableField("view_url") 
+	@TableField("route_path")
 	@ApiModelProperty("地址栏显示路径")
-	private String viewUrl;
+	private String routePath;
 
 	/**
 	 * 子菜单

@@ -1,7 +1,9 @@
 package com.zp.module.sys.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.SystemEntity;
 import com.zp.common.security.annotation.RequiresPermissions;
@@ -48,6 +50,19 @@ public class SystemController {
         IPage<SystemEntity> pageData = systemService.queryPage(System , page);
 
         return R.ok().setData(pageData);
+    }
+
+    /**
+     * 列表
+     */
+    @GetMapping("/listAll")
+    @ApiOperation("系统表列表")
+    @ApiResponse(code=0,message="查询成功",response=SystemEntity.class)
+    public R listAll(){
+        QueryWrapper<SystemEntity> systemEntityQueryWrapper = new QueryWrapper<>();
+        systemEntityQueryWrapper.orderByDesc("create_date");
+        List<SystemEntity> systemEntityList = systemService.list(systemEntityQueryWrapper);
+        return R.ok().setData(systemEntityList);
     }
 
 

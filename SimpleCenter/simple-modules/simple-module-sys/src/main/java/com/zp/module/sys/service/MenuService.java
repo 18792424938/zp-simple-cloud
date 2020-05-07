@@ -21,6 +21,8 @@ public interface MenuService extends IService<MenuEntity> {
     IPage<MenuEntity> queryPage(MenuEntity Menu, IPage<MenuEntity> page);
 
     Set<String> findByRoleId(String roleId);
-    List<MenuEntity> tree();
+    List<MenuEntity> tree(String systemId);
+    List<MenuEntity> nav(String systemId);
+    void deleteById(String id);
 }
 

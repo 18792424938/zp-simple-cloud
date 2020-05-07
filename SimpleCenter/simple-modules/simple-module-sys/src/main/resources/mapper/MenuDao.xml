@@ -9,10 +9,10 @@
     <select id="findByRoleId" parameterType="String" resultType="String">
          select
             sm.perms
-        from sys_role sr
-        left join sys_role_menu srm
+        from sys.sys_role sr
+        left join sys.sys_role_menu srm
         on sr.id = srm.role_id
-        left join sys_menu sm
+        left join sys.sys_menu sm
         on srm.menu_id = srm.id
         where sr.id = #{roleId,jdbcType=VARCHAR}
     </select>
@@ -31,35 +31,63 @@
         <result column="enabled" property="enabled"/>
         <result column="describe" property="describe"/>
         <result column="component_url" property="componentUrl"/>
-        <result column="view_url" property="viewUrl"/>
-        <collection property="children" select="tree" column="{parentId=id}">
-            <id column="id" property="id"/>
-            <result column="name" property="name"/>
-            <result column="parent_id" property="parentId"/>
-            <result column="perms" property="perms"/>
-            <result column="route_name" property="routeName"/>
-            <result column="system_id" property="systemId"/>
-            <result column="type" property="type"/>
-            <result column="order_num" property="orderNum"/>
-            <result column="icon" property="icon"/>
-            <result column="enabled" property="enabled"/>
-            <result column="describe" property="describe"/>
-            <result column="component_url" property="componentUrl"/>
-            <result column="view_url" property="viewUrl"/>
+        <result column="route_path" property="routePath"/>
+        <collection property="children" select="treeChildren"  column="{pid=id}">
         </collection>
     </resultMap>
 
-    <select id="tree" parameterType="String" resultMap="treeData">
+
+    <resultMap id="navData" type="com.zp.api.sys.entity.MenuEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="perms" property="perms"/>
+        <result column="route_name" property="routeName"/>
+        <result column="system_id" property="systemId"/>
+        <result column="type" property="type"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="icon" property="icon"/>
+        <result column="enabled" property="enabled"/>
+        <result column="describe" property="describe"/>
+        <result column="component_url" property="componentUrl"/>
+        <result column="route_path" property="routePath"/>
+        <collection property="children" select="navChildren"  column="{pid=id}">
+        </collection>
+    </resultMap>
+
+    <select id="tree"  resultMap="treeData">
         select
             *
-        from sys_menu
+        from sys.sys_menu
         <where>
-            <if test="parentId!=null and parentId!=''">
-                parent_id = #{parentId,jdbcTypeVARCHAR}
-            </if>
-            <if test="parentId==null or parentId==''">
-                parent_id is null or parent_id = ''
-            </if>
+            parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <select id="treeChildren"  resultMap="treeData">
+        select
+        *
+        from sys.sys_menu
+        <where>
+            parent_id = #{pid,jdbcType=VARCHAR}
+        </where>
+    </select>
+
+
+
+    <select id="nav"  resultMap="navData">
+        select
+        *
+        from sys.sys_menu
+        <where>
+            parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <select id="navChildren"  resultMap="navData">
+        select
+        *
+        from sys.sys_menu
+        <where>
+            parent_id = #{pid,jdbcType=VARCHAR}
         </where>
     </select>
 

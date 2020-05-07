@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -64,11 +65,19 @@ public class SystemEntity implements Serializable {
 	@ApiModelProperty("名称")
 	private String name;
 	/**
-	 * 路径
+	 * 路由路径
 	 */
-	@TableField("path") 
+	@TableField("route_path")
 	@ApiModelProperty("路径")
-	private String path;
+	private String routePath;
+	/**
+	 * 路由名称
+	 */
+	@TableField("route_name")
+	@ApiModelProperty("路径")
+	private String routeName;
+
+
 	/**
 	 * 修改日期
 	 */
@@ -81,5 +90,13 @@ public class SystemEntity implements Serializable {
 	@TableField("update_id") 
 	@ApiModelProperty("修改人")
 	private String updateId;
- 
+
+
+	/**
+	 * 系统的子菜单
+	 */
+	@TableField(exist = false)
+	@ApiModelProperty("系统的子菜单")
+	private List<MenuEntity> children;
+
 }

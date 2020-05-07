@@ -21,5 +21,6 @@ public interface MenuDao extends BaseMapper<MenuEntity> {
 	
 	/*推荐在此直接添加注解写sql,可读性比较好*/
     Set<String> findByRoleId(@Param("roleId") String roleId);
-    List<MenuEntity> tree();
+    List<MenuEntity> tree(@Param("systemId")String systemId);
+    List<MenuEntity> nav(@Param("systemId")String systemId);
 }

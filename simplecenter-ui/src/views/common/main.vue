@@ -38,8 +38,8 @@
 
 <script>
   import menuelsubmenu from "./menu-el-submenu"
-  import {ADDUSER,ADDMENUROUTE} from '@/store/mutations-types'
-  const _import = require('@/router/import-' + process.env.NODE_ENV)
+  import {ADDUSER} from '@/store/mutations-types'
+
 
   export default {
     name: "main",
@@ -63,67 +63,29 @@
       this.initUser();
       //加载系统信息
 
-      //加载菜单
+      //加载
       this.initMenu();
-
-
-
 
     },
     methods: {
       initMenu(){
+        const systemItem = sessionStorage.getItem("system");
         //加载菜单
         const menuListItem = sessionStorage.getItem("menuList");
-        if(!menuListItem){
-          // 查询菜单
-          this.$http({
-            url: `/sys/menu/nav`,
-            method: 'get',
-            params: this.$http.adornParams({systemId:this.systemId})
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              const menuList = [
-                {
-                  "id": "1", "name": "系统管理", type:"10","roterName":"", "":"","viewUrl":"", children: [
-                    {"id": "1-1", "name": "用户管理", type:"20","roterName":"home1", "componentUrl":"sys/user/user-list","viewUrl":"/sys/user-list"},
-                    /*            {"id": "1-2", "name": "角色管理", type:"20","roterName":"home2", "componentUrl":"sys/home2","viewUrl":"/sys/home2"},
-                                {"id": "1-3", "name": "菜单管理", type:"20","roterName":"home3", "componentUrl":"sys/home3","viewUrl":"/sys/home3"},
-                                {"id": "1-4", "name": "字典表管理", type:"20","roterName":"home4", "componentUrl":"sys/home4","viewUrl":"/sys/home4"}*/
-                  ]
-                }]
-
-              var routerList = [];
-              this.createRoter(menuList,routerList);
-
-              let i = 0;
-              for(i =0;i<this.$router.options.routes.length;i++){
-                if(this.$router.options.routes[i].name=="main"){
-                  break;
-                }
-              }
-
-              this.$router.options.routes[i].children = this.$router.options.routes[i].children.concat(routerList)
-
-              this.$router.addRoutes([this.$router.options.routes[i]])
-              //sessionStorage.setItem("menuList",JSON.stringify(menuList))
-
-              var munuId = "";
-              this.handleDefaultActive(menuList,munuId);
-              this.menuList = menuList
-            }else{
-              this.$message.error(data.msg)
-            }
-
-          }).catch((res) => {
-            this.$message.error("网络异常,请刷新页面")
-          }).finally((res) => {
-
-          })
-        }else{
+        if(menuListItem){
           const menuList = JSON.parse(menuListItem)
-          var munuId = "";
-          this.handleDefaultActive(menuList,munuId);
-          this.menuList = menuList
+
+          // 洗菜单
+          const menu = [];
+          this.getMenu(menuList,menu)
+
+          var munuId;
+          this.handleDefaultActive(menu,munuId);
+          this.defaultActive =  munuId;
+          this.menuList = menu
+        }else{
+          const system = JSON.parse(systemItem)
+          this.$router.push(system.path)
         }
       },
       initUser(){
@@ -132,10 +94,7 @@
           method: 'get'
         }).then(({data}) => {
           if (data && data.code === 0) {
-            console.log("------------------",data.data)
             const {id, username,realname,logo}  = data.data;
-            console.log("34554678654321",Object.assign({}, { id,username,realname,logo}))
-
             this.$store.commit(ADDUSER,Object.assign({}, { id,username,realname,logo}))
             // 请求用户信息
             this.$set(this, "user", this.$store.getters.user)
@@ -144,34 +103,19 @@
 
         })
       },
-      // 根据菜单生成路由
-      createRoter(list,routerList){
-        list.forEach(item=>{
-          if(item.type=='20'||item.type=='30'){
-            if(!item.componentUrl.startsWith("/")){
-              item.componentUrl = "/"+item.componentUrl;
+      getMenu(menuList,menu){
+        menuList.forEach(item=>{
+          if(item.type==10||item.type==20){
+            const {id,name,children} = item
+            const childrenTemp = [];
+            if (children&&children.length){
+              this.getMenu(children,childrenTemp);
             }
-
-            if(!item.viewUrl.startsWith("/")){
-              item.viewUrl = "/"+item.viewUrl;
-            }
-
-            var routerTemp = {
-              path: item.viewUrl,
-              component: _import('modules'+item.componentUrl),
-              name: item.roterName,
-              meta: {id: item.id, title: item.name ,isLogin:true}
-            };
-
-            routerList.push(routerTemp)
-            this.$store.commit(ADDMENUROUTE,{id:item.id,path: item.viewUrl,name: item.roterName})
-          }
-          if(item.children&&item.children.length){
-            this.createRoter(item.children,routerList);
+            menu.push(Object.assign({},{id,name,children:childrenTemp}))
           }
         })
-      },
 
+      },
       handleDefaultActive(list,munuId){
         for (let i = 0; i < list.length; i++) {
           if(list[i].type == '20'){//菜单

@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 
+import com.zp.api.sys.entity.SystemEntity;
 import com.zp.api.sys.entity.UserEntity;
- 
+import com.zp.common.core.util.PagerUtil;
+
 
 /**
  * 用户表
@@ -16,8 +18,9 @@ import com.zp.api.sys.entity.UserEntity;
  */
 public interface UserService extends IService<UserEntity> {
 
-    IPage<UserEntity> queryPage(UserEntity User, IPage<UserEntity> page);
+    IPage<UserEntity> queryPage(UserEntity User, PagerUtil pagerUtil);
     UserEntity findByUsername(String username);
+    SystemEntity userSystem(String userId);
 
 }
 

@@ -51,5 +51,8 @@ public class RoleSystemEntity implements Serializable {
 	@TableField("system_id") 
 	@ApiModelProperty("系统id")
 	private String systemId;
+
+
+
  
 }

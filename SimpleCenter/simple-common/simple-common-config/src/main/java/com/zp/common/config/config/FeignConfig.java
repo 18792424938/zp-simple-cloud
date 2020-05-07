@@ -1,4 +1,4 @@
-package com.zp.common.security.config;
+package com.zp.common.config.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
