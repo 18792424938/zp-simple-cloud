@@ -33,7 +33,6 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  debugger
   document.title = to.meta.title?to.meta.title:"首页"
   if(to.name && !to.meta.isLogin){
     next();

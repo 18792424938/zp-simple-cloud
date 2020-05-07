@@ -28,7 +28,6 @@
       }
     },
     activated() {
-      debugger
       console.log("this.$cookie.get('token')",this.$cookie)
       if( this.$cookie.get('token')||sessionStorage.getItem("token")){
 
