@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zp.module.sys.dao.SystemDao">
+
+
+    <select id="selectByUserId" resultType="com.zp.api.sys.entity.SystemEntity">
+        SELECT
+            ss.*
+        FROM sys.sys_user su
+        left JOIN sys.sys_user_role sur
+        on su.id = sur.user_id
+        left join sys.sys_role_system srs
+        on sur.role_id = srs.role_id
+        left join sys.sys_system ss
+        on srs.system_id = ss.id
+        where su.id = #{userId,jdbcType=VARCHAR} and ss.id is not null
+        GROUP BY ss.id
+        ORDER BY ss.create_date
+    </select>
+
+
+
+
+
+
+
+</mapper>

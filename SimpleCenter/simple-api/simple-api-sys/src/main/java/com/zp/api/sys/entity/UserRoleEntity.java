@@ -32,18 +32,7 @@ import lombok.NoArgsConstructor;
 public class UserRoleEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * create_date
-	 */
-	@TableField("create_date") 
-	@ApiModelProperty("create_date")
-	private Date createDate;
-	/**
-	 * create_id
-	 */
-	@TableField("create_id") 
-	@ApiModelProperty("create_id")
-	private String createId;
+
 	/**
 	 * id
 	 */
@@ -51,29 +40,19 @@ public class UserRoleEntity implements Serializable {
 	@TableField("id") 
 	@ApiModelProperty("id")
 	private String id;
+
+	/**
+	 * user_id
+	 */
+	@TableField("user_id")
+	@ApiModelProperty("user_id")
+	private String userId;
 	/**
 	 * role_id
 	 */
 	@TableField("role_id") 
 	@ApiModelProperty("role_id")
 	private String roleId;
-	/**
-	 * update_date
-	 */
-	@TableField("update_date") 
-	@ApiModelProperty("update_date")
-	private Date updateDate;
-	/**
-	 * update_id
-	 */
-	@TableField("update_id") 
-	@ApiModelProperty("update_id")
-	private String updateId;
-	/**
-	 * user_id
-	 */
-	@TableField("user_id") 
-	@ApiModelProperty("user_id")
-	private String userId;
+
  
 }

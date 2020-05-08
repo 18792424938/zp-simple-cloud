@@ -36,34 +36,21 @@ public class SystemServiceImpl extends ServiceImpl<SystemDao, SystemEntity> impl
     private RoleMenuService roleMenuService;
 
 
-
-
+    @Override
+    public List<SystemEntity> selectByUserId(String userid) {
+        return baseMapper.selectByUserId(userid);
+    }
 
     @Override
-    public void removeMyByIds(List<String> list) {
+    public void removeMyById(String systemid) {
 
 
-        for (String systemid : list) {
+        //删除系统绑定关系
+        QueryWrapper<RoleSystemEntity> roleSystemEntityQueryWrapper = new QueryWrapper<>();
+        roleSystemEntityQueryWrapper.eq("system_id",systemid);
+        roleSystemService.remove(roleSystemEntityQueryWrapper);
 
-            //删除系统绑定关系
-            QueryWrapper<RoleSystemEntity> roleSystemEntityQueryWrapper = new QueryWrapper<>();
-            roleSystemEntityQueryWrapper.eq("system_id",systemid);
-            roleSystemService.remove(roleSystemEntityQueryWrapper);
-
-            QueryWrapper<MenuEntity> menuEntityQueryWrapper = new QueryWrapper<>();
-            menuEntityQueryWrapper.eq("system_id",systemid);
-            List<MenuEntity> menuList = menuService.list(menuEntityQueryWrapper);
-
-            List<String> collect = menuList.stream().map(p -> p.getId()).collect(Collectors.toList());
-            //删除菜单绑定关系
-            QueryWrapper<RoleMenuEntity> roleMenuEntityQueryWrapper = new QueryWrapper<>();
-            roleMenuEntityQueryWrapper.eq("menu_id",collect);
-            roleMenuService.remove(roleMenuEntityQueryWrapper);
-
-            //删除菜单
-            menuService.remove(menuEntityQueryWrapper);
-        }
-        this.removeByIds(list);
+        this.removeById(systemid);
     }
 
     @Override

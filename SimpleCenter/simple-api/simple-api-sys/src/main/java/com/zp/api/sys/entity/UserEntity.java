@@ -112,7 +112,7 @@ public class UserEntity implements Serializable {
 	 */
 	@TableField(exist = false)
 	@ApiModelProperty("用户的角色集合")
-	private List roleIds;
+	private List<String> roleIds;
 
 
  

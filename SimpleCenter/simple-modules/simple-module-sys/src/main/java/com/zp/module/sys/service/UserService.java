@@ -22,5 +22,8 @@ public interface UserService extends IService<UserEntity> {
     UserEntity findByUsername(String username);
     SystemEntity userSystem(String userId);
 
+    void saveUser(UserEntity userEntity);
+    void updateUser(UserEntity userEntity);
+
 }
 

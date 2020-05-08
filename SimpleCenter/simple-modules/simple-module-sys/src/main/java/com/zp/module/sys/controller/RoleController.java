@@ -41,6 +41,11 @@ public class RoleController {
     private RoleService roleService;
 
     @Autowired
+    private UserRoleService userRoleService;
+
+
+
+    @Autowired
     private MenuService meunService;
 
     @Autowired
@@ -69,6 +74,20 @@ public class RoleController {
         return R.ok().setData(pageData);
     }
 
+    /**
+     * 角色集合
+     */
+    @GetMapping("/listRoleAll")
+    @ApiOperation("角色集合")
+    @ApiResponse(code = 0, message = "查询成功", response = RoleEntity.class)
+    public R listRoleAll() {
+        List<RoleEntity> roleEntityList = roleService.list(new QueryWrapper<RoleEntity>().orderByDesc("create_date"));
+        return R.ok().setData(roleEntityList);
+    }
+
+
+
+
 
     /**
      * 信息
@@ -79,6 +98,8 @@ public class RoleController {
     @ApiResponse(code = 0, message = "查询成功", response = RoleEntity.class)
     public R<RoleEntity> info(@PathVariable("id") String id) {
         RoleEntity role = roleService.getById(id);
+
+
 
         return R.ok(RoleEntity.class).setData(role);
     }
@@ -167,7 +188,6 @@ public class RoleController {
         return R.ok();
     }
 
-
     /**
      * 返回用户登录的信息
      */
@@ -184,6 +204,8 @@ public class RoleController {
         }
         return R.ok(Map.class).setData(map);
     }
+
+
 
 
 }

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.org.apache.regexp.internal.RE;
 import com.zp.api.sys.entity.UploadFileEntity;
 import com.zp.api.sys.entity.UserRoleEntity;
+import com.zp.api.sys.vo.PasswordVO;
 import com.zp.common.core.util.PagerUtil;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
@@ -82,6 +83,9 @@ public class UserController {
     public R<UserEntity> info(@PathVariable("id") String id) {
         UserEntity user = userService.getById(id);
 
+        List<UserRoleEntity> userRoleEntityList = userRoleService.list(new QueryWrapper<UserRoleEntity>().eq("user_id", id));
+        List<String> collect = userRoleEntityList.stream().map(p -> p.getRoleId()).collect(Collectors.toList());
+        user.setRoleIds(collect);
         return R.ok(UserEntity.class).setData(user);
     }
 
@@ -115,7 +119,7 @@ public class UserController {
         //生成密码
         user.setPassword(DigestUtils.md5DigestAsHex(bytesPassword));
 
-        userService.save(user);
+        userService.saveUser(user);
 
         return R.ok();
     }
@@ -144,11 +148,73 @@ public class UserController {
         userEntity.setRealname(user.getRealname());
         userEntity.setStatus(user.getStatus());
 
-        userService.updateById(userEntity);
+        userEntity.setRoleIds(user.getRoleIds());
+
+        userService.updateUser(userEntity);
 
         return R.ok();
     }
 
+    /**
+     * 修改密码
+     */
+    @PostMapping("/updatePassword")
+    @ApiOperation("修改用户表信息")
+    public R<Object> updatePassword(@RequestBody PasswordVO passwordVO) {
+
+        String userId = authUtils.getUserId();
+
+
+        UserEntity userEntity = userService.getById(userId);
+
+        //验证原密码
+        byte[] bytesPassword = (userEntity.getSalt() + "/" + passwordVO.getOldPassword()).getBytes();
+        //验证密码
+        if (!userEntity.getPassword().equals(DigestUtils.md5DigestAsHex(bytesPassword))){
+            return R.error("原密码错误");
+        }
+
+        //修改密码
+        //生成盐
+        userEntity.setSalt(RandomStringUtils.randomAscii(12));
+        bytesPassword = (userEntity.getSalt() + "/" + passwordVO.getNewPassword()).getBytes();
+        //生成密码
+        userEntity.setPassword(DigestUtils.md5DigestAsHex(bytesPassword));
+
+        userService.updateById(userEntity);
+
+
+        return R.ok();
+    }
+
+    /**
+     * 重置密码
+     */
+    @PostMapping("/resetPassword")
+    @RequiresPermissions("sys:user:resetPassword")
+    @ApiOperation("修改用户表信息")
+    public R<Object> resetPassword(@RequestBody UserEntity userEntityx) {
+
+        UserEntity userEntity = userService.getById(userEntityx.getId());
+
+
+        if (StringUtils.isBlank(userEntityx.getPassword())) {
+            userEntity.setPassword("11111111");
+        }else{
+            userEntity.setPassword(userEntityx.getPassword());
+        }
+
+
+        //修改密码
+        //生成盐
+        userEntity.setSalt(RandomStringUtils.randomAscii(12));
+        byte[]  bytesPassword = (userEntity.getSalt() + "/" + userEntity.getPassword()).getBytes();
+        //生成密码
+        userEntity.setPassword(DigestUtils.md5DigestAsHex(bytesPassword));
+
+        userService.updateById(userEntity);
+        return R.ok();
+    }
 
     /**
      * 启用/禁用

@@ -6,10 +6,11 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zp.api.sys.entity.SystemEntity;
+import com.zp.api.sys.entity.*;
 import com.zp.common.core.util.PagerUtil;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
+import com.zp.module.sys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zp.api.sys.entity.SystemEntity;
-import com.zp.module.sys.service.SystemService;
 
 import com.zp.common.core.util.R;
 
@@ -43,6 +43,17 @@ public class SystemController {
 
     @Autowired
     private AuthUtils authUtils;
+
+    @Autowired
+    private RoleSystemService roleSystemService;
+
+
+    @Autowired
+    private MenuService menuService;
+
+
+
+
 
 
     /**
@@ -71,6 +82,20 @@ public class SystemController {
         List<SystemEntity> systemEntityList = systemService.list(systemEntityQueryWrapper);
         return R.ok().setData(systemEntityList);
     }
+
+    /**
+     * 列表
+     */
+    @GetMapping("/listSystem")
+    @ApiOperation("系统表列表")
+    @ApiResponse(code = 0, message = "查询成功", response = SystemEntity.class)
+    public R listSystem() {
+        String userid = authUtils.getUserId();
+        List<SystemEntity> systemEntityList = systemService.selectByUserId(userid);
+        return R.ok().setData(systemEntityList);
+    }
+
+
 
 
     /**
@@ -124,11 +149,21 @@ public class SystemController {
     /**
      * 删除
      */
-    @PostMapping("/delete")
+    @GetMapping("/delete/{id}")
     @RequiresPermissions("sys:system:delete")
     @ApiOperation("删除系统表信息")
-    public R<Object> delete(@RequestBody String[] ids) {
-        systemService.removeMyByIds(Arrays.asList(ids));
+    public R<Object> delete(@PathVariable("id") String id) {
+
+        QueryWrapper<MenuEntity> menuEntityQueryWrapper = new QueryWrapper<>();
+        menuEntityQueryWrapper.eq("system_id",id);
+        int count1 = menuService.count(menuEntityQueryWrapper);
+
+        if(count1>0){
+            return R.error("请先删除系统下的菜单");
+        }
+
+
+        systemService.removeMyById(id);
 
         return R.ok();
     }

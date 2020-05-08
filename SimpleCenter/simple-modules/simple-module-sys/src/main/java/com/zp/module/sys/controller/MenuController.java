@@ -136,14 +136,14 @@ public class MenuController {
     /**
      * 删除
      */
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     @RequiresPermissions("sys:menu:delete")
     @ApiOperation("删除菜单表信息")
     public R<Object> delete(@PathVariable("id") String id) {
 
         QueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("parent_id",id);
-        int count = menuService.count();
+        int count = menuService.count(queryWrapper);
         if (count>0){
             return R.error("请先删除子菜单");
         }

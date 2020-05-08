@@ -23,7 +23,11 @@ public interface SystemService extends IService<SystemEntity> {
 
     List<SystemEntity> treeMenu();
 
-    void removeMyByIds(List<String> ids);
+    void removeMyById(String id);
+
+    List<SystemEntity> selectByUserId(String userid);
+
+
 
 
 
