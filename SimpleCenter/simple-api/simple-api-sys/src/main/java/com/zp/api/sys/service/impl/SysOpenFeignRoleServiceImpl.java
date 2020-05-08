@@ -7,6 +7,7 @@ import com.zp.api.sys.service.SysOpenFeignRoleService;
 import com.zp.common.core.util.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,8 @@ public class SysOpenFeignRoleServiceImpl implements SysOpenFeignRoleService {
 
 
     @Override
-    public R<Map> getLoginRole(List<String> ids) {
+    public R<Set> getLoginRole(String id) {
         logger.error(SysConstants.SERVICE, SysOpenFeignRoleServiceImpl.class,"getLoginRole请求失败{}" , this.cause);
-        return R.error(Map.class);
+        return R.error(Set.class);
     }
 }

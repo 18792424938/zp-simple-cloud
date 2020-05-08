@@ -60,6 +60,7 @@
     <swagger-ui.version>2.9.2</swagger-ui.version>
     <nimbus-jose-jwt.version>8.14.1</nimbus-jose-jwt.version>
     <fastjson.version>1.2.68</fastjson.version>
+    <jedis.version>3.2.0</jedis.version>
   </properties>
 
   <dependencyManagement>
@@ -135,6 +136,11 @@
         <groupId>io.springfox</groupId>
         <artifactId>springfox-swagger-ui</artifactId>
         <version>${swagger-ui.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>${jedis.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

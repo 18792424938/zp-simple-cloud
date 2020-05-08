@@ -265,7 +265,7 @@ public class UserController {
 
         //查询用户角色列表
         QueryWrapper<UserRoleEntity> userRoleEntityQueryWrapper = new QueryWrapper<>();
-        userRoleEntityQueryWrapper.eq("id", id);
+        userRoleEntityQueryWrapper.eq("user_id", id);
 
         List<UserRoleEntity> userRoleEntityList = userRoleService.list(userRoleEntityQueryWrapper);
         List<String> roleids = userRoleEntityList.stream().map(p -> p.getRoleId()).collect(Collectors.toList());

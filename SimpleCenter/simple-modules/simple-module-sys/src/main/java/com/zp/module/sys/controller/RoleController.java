@@ -191,18 +191,12 @@ public class RoleController {
     /**
      * 返回用户登录的信息
      */
-    @PostMapping("/getLoginRole")
+    @GetMapping("/getLoginRole/{id}")
     @ApiOperation("根据ID获取登录用户信息")
     @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)
-    public R<Map> getLoginUser(@RequestBody List<String> ids) {
-        Map<String, Set<String>> map = new HashMap<>();
-
-
-        for (String id : ids) {
-            //查询该角色对应的所有权限码
-            map.put(id, meunService.findByRoleId(id));
-        }
-        return R.ok(Map.class).setData(map);
+    public R<Set> getLoginUser(@PathVariable("id") String id) {
+        Set<String> set = meunService.findByRoleId(id);
+        return R.ok(Set.class).setData(set);
     }
 
 

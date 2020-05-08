@@ -7,14 +7,14 @@
 
 
     <select id="findByRoleId" parameterType="String" resultType="String">
-         select
-            sm.perms
+        select
+        sm.perms
         from sys.sys_role sr
         left join sys.sys_role_menu srm
         on sr.id = srm.role_id
         left join sys.sys_menu sm
-        on srm.menu_id = srm.id
-        where sr.id = #{roleId,jdbcType=VARCHAR}
+        on srm.menu_id = sm.id
+        where sr.id =  #{roleId,jdbcType=VARCHAR} and sm.perms is not null and sm.perms &lt;&gt; ''
     </select>
 
 

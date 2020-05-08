@@ -10,6 +10,7 @@ import com.zp.api.sys.service.SysOpenFeignUserService;
 import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.JwtUtil;
 import com.zp.common.core.util.R;
+import com.zp.common.core.util.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,10 @@ public class AuthUtils {
 	@Resource
 	private SysOpenFeignRoleService sysOpenFeignRoleService;
 
+	@Resource
+	private RedisUtils redisUtils;
 
 
-
-
-	/*@Autowired
-	private RedisUtils redisUtils;*/
 
 
 	public String getUserId() {
@@ -106,10 +105,21 @@ public class AuthUtils {
 	 * 获取当前用户 如果没有token中得用户则返回null
 	 */ 
 	public UserEntity getUser(String userId) {
-		//查询redis
-		//通过openFrie
+
+
+		UserEntity userEntity = redisUtils.get("loain_" + userId,UserEntity.class);
+		if(userEntity!=null){
+			logger.info("从redis中获取用户信息[{}]",userEntity);
+			return userEntity;
+		}
+
+
 		R<UserEntity> r = sysOpenFeignUserService.getLoginUser(userId);
-		return r.getData();
+		UserEntity loginUser = r.getData();
+		if(loginUser!=null){
+			redisUtils.set("loain_" + userId,loginUser,3600);
+		}
+		return loginUser;
 		
 	}
 	
@@ -117,30 +127,27 @@ public class AuthUtils {
 
 	public Set<String> getUserTokenPerms(String userId) {
 
-		Set<String> set = new HashSet<>();
 
 		UserEntity userEntity = this.getUser(userId);
-
-		List roleIds = userEntity.getRoleIds();
-		if(roleIds!=null&&roleIds.size()>0){
-			R<Map> r = sysOpenFeignRoleService.getLoginRole(roleIds);
-			Set<String> tempSet = (Set<String>)r.getData();
-			set.addAll(tempSet);
+		List<String> roleIds = userEntity.getRoleIds();
+		Set<String> requiresPermissions = new HashSet<>();
+		if(roleIds!=null){
+			for (String roleId : roleIds) {
+				Set<String> perms = redisUtils.get("requiresPermissions_" + roleId, Set.class);
+				if(perms!=null&&perms.size()>0){
+					requiresPermissions.addAll(perms);
+				}else{
+					R<Set> r = sysOpenFeignRoleService.getLoginRole(roleId);
+					Set<String> data = r.getData();
+					if(data!=null&&data.size()>0){
+						requiresPermissions.addAll(data);
+						redisUtils.set("requiresPermissions_" + roleId,data);
+					}
+				}
+			}
 		}
-		// 根据redis判断
-		/*String key = getClass().getSimpleName() + ".getUserTokenPerms." + token;
-		if(redisUtils.containKey(key)) {
-			return redisUtils.get(key, Set.class);
-		}
 
-		String userId = getUserId(token);
-
-
-		Set<String> perms = getUserPerms(userId);
-
-		redisUtils.set(key, perms , 10*60);*/
-
-		return set;
+		return requiresPermissions;
 	}
 
 }

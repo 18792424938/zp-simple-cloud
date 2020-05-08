@@ -18,6 +18,6 @@ import java.util.Set;
 @FeignClient(contextId="sysOpenFeignRoleService",value = SysConstants.SERVICE , fallbackFactory = SysOpenFeignRoleFallbackFactory.class )
 public interface SysOpenFeignRoleService {
 
-    @PostMapping(value="/sys/role/getLoginRole")
-    public R<Map> getLoginRole(@RequestBody List<String> ids);
+    @GetMapping(value="/sys/role/getLoginRole/{id}")
+    public R<Set> getLoginRole(@PathVariable("id") String id);
 }
