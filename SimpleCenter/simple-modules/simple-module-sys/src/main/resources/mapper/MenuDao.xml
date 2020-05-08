@@ -60,7 +60,7 @@
             *
         from sys.sys_menu
         <where>
-            parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
+            (parent_id is null or parent_id = '') and system_id = #{systemId,jdbcType=VARCHAR}
         </where>
         order by order_num,create_date
     </select>
@@ -81,7 +81,7 @@
         *
         from sys.sys_menu
         <where>
-            parent_id is null or parent_id = '' and system_id = #{systemId,jdbcType=VARCHAR}
+            (parent_id is null or parent_id = '') and system_id = #{systemId,jdbcType=VARCHAR}
         </where>
         order by order_num
     </select>

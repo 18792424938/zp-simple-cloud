@@ -67,7 +67,7 @@ public class SystemController {
     @ApiResponse(code = 0, message = "查询成功", response = SystemEntity.class)
     public R listAll() {
         QueryWrapper<SystemEntity> systemEntityQueryWrapper = new QueryWrapper<>();
-        systemEntityQueryWrapper.orderByDesc("create_date");
+        systemEntityQueryWrapper.orderByAsc("create_date");
         List<SystemEntity> systemEntityList = systemService.list(systemEntityQueryWrapper);
         return R.ok().setData(systemEntityList);
     }

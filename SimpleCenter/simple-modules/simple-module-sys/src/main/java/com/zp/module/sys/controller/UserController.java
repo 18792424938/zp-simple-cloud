@@ -153,7 +153,7 @@ public class UserController {
     /**
      * 启用/禁用
      */
-    @PostMapping("/forbidden/{id}")
+    @GetMapping("/forbidden/{id}")
     @RequiresPermissions("sys:user:forbidden")
     @ApiOperation("修改用户表信息")
     public R<Object> forbidden(@PathVariable("id") String id) {
