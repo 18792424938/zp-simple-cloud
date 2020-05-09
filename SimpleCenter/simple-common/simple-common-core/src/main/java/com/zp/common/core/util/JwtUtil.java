@@ -6,6 +6,7 @@ import com.nimbusds.jose.crypto.*;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.zp.common.core.exception.RRException;
 
 import java.util.Date;
 import java.util.UUID;
@@ -53,7 +54,7 @@ public class JwtUtil {
             parseJWT = SignedJWT.parse(idToken);
         }catch (Exception e){
             e.getStackTrace();
-            throw new Exception("token验证失败");
+            throw new RRException("token验证失败");
         }
 
         JWSVerifier verifier = new MACVerifier(JwtUtil.secret);
@@ -61,13 +62,13 @@ public class JwtUtil {
         boolean verify = parseJWT.verify(verifier);
 
         if(!verify){
-            throw new Exception("token验证失败");
+            throw new RRException("token验证失败");
         }
 
         JWTClaimsSet jwtClaimsSet = parseJWT.getJWTClaimsSet();
 
         if(jwtClaimsSet.getExpirationTime().getTime()<new Date().getTime()){
-            throw new Exception("登录已过期,请重新登录");
+            throw new RRException("登录已过期,请重新登录");
         }
         return JSONObject.parseObject(jwtClaimsSet.getClaim("payloadText").toString());
 

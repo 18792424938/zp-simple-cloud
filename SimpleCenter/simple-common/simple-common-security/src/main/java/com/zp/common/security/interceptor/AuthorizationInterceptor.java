@@ -39,15 +39,11 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 
-
-
 	 
     @Autowired
     private AuthUtils authUtils;
 
 
-    public static final String USER_KEY = "userId";
-     
      
 
     @Override
