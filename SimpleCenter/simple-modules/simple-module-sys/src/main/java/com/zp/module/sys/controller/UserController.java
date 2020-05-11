@@ -11,11 +11,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.org.apache.regexp.internal.RE;
 import com.zp.api.sys.entity.UploadFileEntity;
 import com.zp.api.sys.entity.UserRoleEntity;
+import com.zp.api.sys.enums.SysEnum;
 import com.zp.api.sys.vo.PasswordVO;
 import com.zp.common.core.util.PagerUtil;
+import com.zp.common.core.util.RedisUtils;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.module.sys.service.UserRoleService;
+import com.zp.module.sys.service.UserTokenExpireService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +60,15 @@ public class UserController {
 
     @Autowired
     private AuthUtils authUtils;
+
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @Autowired
+    private UserTokenExpireService userTokenExpireService;
+
+
+
 
 
     /**
@@ -152,6 +164,10 @@ public class UserController {
 
         userService.updateUser(userEntity);
 
+        //刷新超时时间
+        userTokenExpireService.saveExpire(userEntity.getId());
+
+
         return R.ok();
     }
 
@@ -183,6 +199,9 @@ public class UserController {
 
         userService.updateById(userEntity);
 
+        //刷新超时时间
+        userTokenExpireService.saveExpire(userEntity.getId());
+
 
         return R.ok();
     }
@@ -205,6 +224,8 @@ public class UserController {
         }
 
 
+
+
         //修改密码
         //生成盐
         userEntity.setSalt(RandomStringUtils.randomAscii(12));
@@ -213,6 +234,10 @@ public class UserController {
         userEntity.setPassword(DigestUtils.md5DigestAsHex(bytesPassword));
 
         userService.updateById(userEntity);
+
+        //刷新超时时间
+        userTokenExpireService.saveExpire(userEntity.getId());
+
         return R.ok();
     }
 
@@ -227,11 +252,14 @@ public class UserController {
         UserEntity userEntity = userService.getById(id);
 
         if (10 == userEntity.getStatus()) {
-            userEntity.setStatus(20);
+            userEntity.setStatus(SysEnum.USERSTATUS_20.getCode());
         } else {
-            userEntity.setStatus(10);
+            userEntity.setStatus(SysEnum.USERSTATUS_10.getCode());
         }
         userService.updateById(userEntity);
+        //刷新超时时间
+        userTokenExpireService.saveExpire(userEntity.getId());
+
         return R.ok();
     }
 
@@ -262,6 +290,8 @@ public class UserController {
 
         // 查询用户信息
         UserEntity user = userService.getOne(userEntityQueryWrapper);
+
+        user.setExpireDate(userTokenExpireService.getExpireDate(user.getId()));
 
         //查询用户角色列表
         QueryWrapper<UserRoleEntity> userRoleEntityQueryWrapper = new QueryWrapper<>();

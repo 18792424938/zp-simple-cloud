@@ -66,7 +66,7 @@ public class RedisUtils {
 			}catch (Exception e){
 				e.getStackTrace();
 			}finally {
-				jedisPool.close();
+				jedis.close();
 			}
     	}else{
 			cache.put(key, value);
@@ -108,7 +108,7 @@ public class RedisUtils {
 			}catch (Exception e){
 				e.getStackTrace();
 			}finally {
-				jedisPool.close();
+				jedis.close();
 			}
 			return JSON.parseObject(value,clazz);
     	}else{
@@ -143,7 +143,7 @@ public class RedisUtils {
 			}catch (Exception e){
 				e.getStackTrace();
 			}finally {
-				jedisPool.close();
+				jedis.close();
 			}
 			return exist;
     	}else{
@@ -164,7 +164,7 @@ public class RedisUtils {
 			}catch (Exception e){
 				e.getStackTrace();
 			}finally {
-				jedisPool.close();
+				jedis.close();
 			}
     	}else{
 			cache.remove(key);
@@ -181,7 +181,7 @@ public class RedisUtils {
 			}catch (Exception e){
 				e.getStackTrace();
 			}finally {
-				jedisPool.close();
+				jedis.close();
 			}
 			return keys;
     	}else{
@@ -204,7 +204,7 @@ public class RedisUtils {
 			}catch (Exception e){
 				e.getStackTrace();
 			}finally {
-				jedisPool.close();
+				jedis.close();
 			}
     	}else{
 			clearExpire();

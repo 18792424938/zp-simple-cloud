@@ -2,6 +2,7 @@ package com.zp.common.security.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zp.api.auth.vo.TokenVO;
+import com.zp.api.sys.entity.UserEntity;
 import com.zp.common.config.config.FeignConfig;
 import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.JwtUtil;
@@ -54,7 +55,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         if(StringUtils.isNotBlank(feignToken) && feignToken.equals(FeignConfig.NO_VALID_TOKEN)) {
             logger.info("request is feign . url:[{}]" , request.getRequestURI());
             // 放行 但顺带把feigntoken清空
-            //request.hea
+            //@TODO
             return true ;
         }
 
@@ -76,8 +77,16 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        //解析token 并获取用户信息
+        UserEntity userEntity = authUtils.getUser();
+        if(20 == userEntity.getStatus()){
+            throw  new RRException("用户已被禁用", HttpStatus.UNAUTHORIZED.value());
+        }
+        //刷新时间大于token签发的时间,让重新登录
+        if(userEntity.getExpireDate().getTime()>=tokenVO.getIssueTime().getTime()){
+            throw  new RRException("token已失效,请重新登录", HttpStatus.UNAUTHORIZED.value());
+        }
 
+        //解析token 并获取用户信息
         Set<String> peram = authUtils.getUserTokenPerms(tokenVO.getId());
 
         //验证当前用户是否有权限

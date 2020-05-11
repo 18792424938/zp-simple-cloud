@@ -73,6 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     public IPage<UserEntity> queryPage(UserEntity User , PagerUtil pagerUtil) {
 
         QueryWrapper queryWrapper = new QueryWrapper<UserEntity>();
+        queryWrapper.ne("id","admin");
         queryWrapper.orderByDesc("create_date");
         queryWrapper.like(StringUtils.isNotBlank(User.getUsername()),"username",User.getUsername());
         queryWrapper.like(StringUtils.isNotBlank(User.getRealname()),"realname",User.getRealname());

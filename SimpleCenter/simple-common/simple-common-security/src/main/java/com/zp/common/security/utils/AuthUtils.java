@@ -107,7 +107,7 @@ public class AuthUtils {
 	public UserEntity getUser(String userId) {
 
 
-		UserEntity userEntity = redisUtils.get("loain_" + userId,UserEntity.class);
+		UserEntity userEntity = redisUtils.get("login_" + userId,UserEntity.class);
 		if(userEntity!=null){
 			logger.info("从redis中获取用户信息[{}]",userEntity);
 			return userEntity;
@@ -117,7 +117,7 @@ public class AuthUtils {
 		R<UserEntity> r = sysOpenFeignUserService.getLoginUser(userId);
 		UserEntity loginUser = r.getData();
 		if(loginUser!=null){
-			redisUtils.set("loain_" + userId,loginUser,3600);
+			redisUtils.set("login_" + userId,loginUser,3600);
 		}
 		return loginUser;
 		

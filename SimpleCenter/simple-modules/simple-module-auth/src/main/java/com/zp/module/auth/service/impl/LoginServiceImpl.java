@@ -25,6 +25,10 @@ public class LoginServiceImpl extends ServiceImpl<LoginDao, UserEntity> implemen
             throw new Exception("用户不存在");
         }
 
+        if(userEntity.getStatus()==20){
+            throw new Exception("用户已被禁用");
+        }
+
         byte[] bytesPassword = (userEntity.getSalt() + "/" + loginVO.getPassword()).getBytes();
         //验证密码
         if (!userEntity.getPassword().equals(DigestUtils.md5DigestAsHex(bytesPassword))){

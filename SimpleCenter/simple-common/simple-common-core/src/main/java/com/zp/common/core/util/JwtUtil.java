@@ -70,7 +70,12 @@ public class JwtUtil {
         if(jwtClaimsSet.getExpirationTime().getTime()<new Date().getTime()){
             throw new RRException("登录已过期,请重新登录");
         }
-        return JSONObject.parseObject(jwtClaimsSet.getClaim("payloadText").toString());
+
+        Date issueTime = jwtClaimsSet.getIssueTime();
+        JSONObject jsonObject = JSONObject.parseObject(jwtClaimsSet.getClaim("payloadText").toString());
+        //token签发日期
+        jsonObject.put("issueTime",issueTime);
+        return jsonObject;
 
     }
 

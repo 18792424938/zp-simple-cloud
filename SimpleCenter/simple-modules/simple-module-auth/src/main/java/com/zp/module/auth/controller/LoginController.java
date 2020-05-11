@@ -45,7 +45,7 @@ public class LoginController {
         try {
             UserEntity userEntity = loginService.login(loginVO);
 
-            TokenVO tokenVO = new TokenVO(userEntity.getId(),userEntity.getUsername());
+            TokenVO tokenVO = new TokenVO(userEntity.getId(),userEntity.getUsername(),null);
 
             JSONObject jsonObject = (JSONObject)JSONObject.toJSON(tokenVO);
             // 生成token

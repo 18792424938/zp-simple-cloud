@@ -15,7 +15,7 @@ public class AnonsConfig {
     @Bean
     public AnonsUtils initAnonsUtils(){
         AnonsUtils anonsUtils = new AnonsUtils();
-        anonsUtils.add("/auth//index");
+        anonsUtils.add("/auth/index");
         anonsUtils.add("/auth/login");
         anonsUtils.add("/auth/captcha");
         return anonsUtils;

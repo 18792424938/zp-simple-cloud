@@ -34,6 +34,14 @@ public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * id
+	 */
+	@TableId(type=IdType.UUID)
+	@TableField("id")
+	@ApiModelProperty("id")
+	private String id;
+
+	/**
 	 * 创建日期
 	 */
 	@TableField("create_date") 
@@ -45,13 +53,7 @@ public class UserEntity implements Serializable {
 	@TableField("create_id") 
 	@ApiModelProperty("创建id")
 	private String createId;
-	/**
-	 * id
-	 */
-	@TableId(type=IdType.UUID)
-	@TableField("id") 
-	@ApiModelProperty("id")
-	private String id;
+
 	/**
 	 * logo
 	 */
@@ -113,6 +115,16 @@ public class UserEntity implements Serializable {
 	@TableField(exist = false)
 	@ApiModelProperty("用户的角色集合")
 	private List<String> roleIds;
+
+
+	/**
+	 * 过期时间
+	 */
+	@TableField(exist = false)
+	@ApiModelProperty("过期时间")
+	private Date expireDate;
+
+
 
 
  
