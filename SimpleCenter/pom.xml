@@ -61,6 +61,7 @@
     <nimbus-jose-jwt.version>8.14.1</nimbus-jose-jwt.version>
     <fastjson.version>1.2.68</fastjson.version>
     <jedis.version>3.2.0</jedis.version>
+    <fastdfs.client.version>1.27.0.0</fastdfs.client.version>
   </properties>
 
   <dependencyManagement>
@@ -142,6 +143,14 @@
         <artifactId>jedis</artifactId>
         <version>${jedis.version}</version>
       </dependency>
+
+      <!--fastdfs防盗链-->
+      <dependency>
+        <groupId>net.oschina.zcx7878</groupId>
+        <artifactId>fastdfs-client-java</artifactId>
+        <version>${fastdfs.client.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 

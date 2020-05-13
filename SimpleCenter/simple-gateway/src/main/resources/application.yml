@@ -24,6 +24,11 @@ spring:
           uri: lb://simple-module-sys
           predicates:
             - Path=/sys/**
+        - id: simple-module-fileupload
+          uri: lb://simple-module-fileupload
+          predicates:
+            - Path=/fileupload/**
+
 
 logging:
   level:

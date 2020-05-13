@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Redis工具类
  *
- * @author lyf
+ * @author zhaipan
  * 
  * @date 2017-07-17 21:12
  */

@@ -1,14 +1,14 @@
-package com.zp.module.sys.service;
- 
+package com.zp.module.fileupload.service;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import com.zp.common.core.util.PagerUtil;
+import com.zp.api.fileupload.entity.UploadFileEntity;
 
-import com.zp.api.sys.entity.UploadFileEntity;
- 
 
 /**
- * 附件表
+ * 用户表
  *
  * @author zp
  * @email 18792424938@163.com
@@ -16,6 +16,7 @@ import com.zp.api.sys.entity.UploadFileEntity;
  */
 public interface UploadFileService extends IService<UploadFileEntity> {
 
-    IPage<UploadFileEntity> queryPage(UploadFileEntity UploadFile, IPage<UploadFileEntity> page);
+    IPage<UploadFileEntity> queryPage(UploadFileEntity uploadFileEntity, PagerUtil pagerUtil);
+
 }
 

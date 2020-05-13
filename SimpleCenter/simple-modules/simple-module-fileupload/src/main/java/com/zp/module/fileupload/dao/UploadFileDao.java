@@ -1,12 +1,11 @@
-package com.zp.module.sys.dao;
+package com.zp.module.fileupload.dao;
 
-import com.zp.api.sys.entity.UploadFileEntity;
-
-import org.apache.ibatis.annotations.Mapper; 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zp.api.fileupload.entity.UploadFileEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 附件表
+ * 用户表
  * 
  * @author zp
  * @email 18792424938@163.com
@@ -16,5 +15,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface UploadFileDao extends BaseMapper<UploadFileEntity> {
 	
 	/*推荐在此直接添加注解写sql,可读性比较好*/
-	
 }

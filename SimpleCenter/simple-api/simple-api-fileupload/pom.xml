@@ -9,9 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>simple-api-sys</artifactId>
+    <artifactId>simple-api-fileupload</artifactId>
     <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -30,10 +29,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.zp</groupId>
-            <artifactId>simple-common-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
+
 </project>

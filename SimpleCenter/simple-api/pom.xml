@@ -14,6 +14,7 @@
     <modules>
         <module>simple-api-sys</module>
         <module>simple-api-auth</module>
+        <module>simple-api-fileupload</module>
     </modules>
 
 </project>
