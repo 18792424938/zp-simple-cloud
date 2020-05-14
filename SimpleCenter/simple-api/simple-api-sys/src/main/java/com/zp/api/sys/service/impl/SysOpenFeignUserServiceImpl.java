@@ -30,6 +30,11 @@ public class SysOpenFeignUserServiceImpl implements SysOpenFeignUserService {
     }
 
     @Override
+    public R<UserEntity> test() {
+        return null;
+    }
+
+    @Override
     public R<UserEntity> getLoginUser(String id) {
         logger.error(SysConstants.SERVICE,SysOpenFeignUserServiceImpl.class,"getLoginUser请求失败{}" , this.cause);
         return R.error(UserEntity.class);

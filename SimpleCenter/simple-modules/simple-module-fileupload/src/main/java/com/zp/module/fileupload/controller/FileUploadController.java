@@ -1,5 +1,7 @@
 package com.zp.module.fileupload.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zp.api.fileupload.vo.UploadFileVO;
 import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.R;
 import com.zp.api.fileupload.entity.UploadFileEntity;
@@ -14,9 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -86,22 +86,49 @@ public class FileUploadController {
             UploadFileEntity uploadFileEntity = fileUploadUtil.uploadFile(file);
 			uploadFileEntity.setEncode(10);
             uploadFileService.save(uploadFileEntity);
-
-			UploadFileEntity uploadFileEntity1 = new UploadFileEntity();
-			uploadFileEntity1.setId(uploadFileEntity.getId());
-			uploadFileEntity1.setFileUrl(uploadFileEntity.getFileUrl());
-			uploadFileEntity1.setEncode(uploadFileEntity.getEncode());
-
-            return R.ok().setData(uploadFileEntity1);
+            UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl());
+            return R.ok().setData(uploadFileVO);
         }catch (RRException e){
             return R.error(e.getMsg());
         }
 	}
 
 
+	@PostMapping("/fileList")
+	@ResponseBody
+	@ApiOperation("返回数据集合")
+	public R<List> fileList(@RequestBody String[] ids){
+
+	    List<UploadFileVO> uploadFileVOList = new LinkedList<>();
+
+		if(ids!=null&&ids.length>0){
+			QueryWrapper<UploadFileEntity> queryWrapper = new QueryWrapper<>();
+			queryWrapper.in("id",ids);
+			queryWrapper.orderByDesc("create_date");
+            List<UploadFileEntity> list = uploadFileService.list(queryWrapper);
+            for (UploadFileEntity uploadFileEntity : list) {
+                UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl());
+                uploadFileVOList.add(uploadFileVO);
+            }
+		}
+
+		return R.ok(List.class).setData(uploadFileVOList);
+	}
 
 
-	@RequestMapping("/fileDown")
+	@GetMapping("/findById")
+	@ResponseBody
+	@ApiOperation("返回数据集合")
+	public R<UploadFileVO> findById(String id){
+		UploadFileEntity uploadFileEntity = uploadFileService.getById(id);
+		UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl());
+		return R.ok(UploadFileVO.class).setData(uploadFileVO);
+	}
+
+
+
+
+	@GetMapping("/fileDown")
 	public void  fileDowload(HttpServletResponse response,HttpServletRequest request,String uuid) {
 		if(StringUtils.isEmpty(uuid)) {
 			return ;

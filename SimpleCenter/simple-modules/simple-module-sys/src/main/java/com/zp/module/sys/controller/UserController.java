@@ -136,6 +136,20 @@ public class UserController {
     }
 
     /**
+     * 保存
+     */
+    @PostMapping("/updateSelf")
+    @ApiOperation("保存用户表信息")
+    public R<Object> updateSelf(@RequestBody UserEntity user) {
+
+        String userId = authUtils.getUserId();
+        UserEntity userEntityOld = userService.getById(userId);
+        userEntityOld.setLogo(user.getLogo());
+        userService.updateById(userEntityOld);
+        return R.ok();
+    }
+
+    /**
      * 修改
      */
     @PostMapping("/update")
@@ -285,7 +299,7 @@ public class UserController {
 
         QueryWrapper<UserEntity> userEntityQueryWrapper = new QueryWrapper<>();
         userEntityQueryWrapper.eq("id", id);
-        userEntityQueryWrapper.select(new String[]{"id", "username", "realname", "status"});
+        userEntityQueryWrapper.select(new String[]{"id", "username", "realname", "status","logo"});
 
         // 查询用户信息
         UserEntity user = userService.getOne(userEntityQueryWrapper);
@@ -301,6 +315,16 @@ public class UserController {
         user.setRoleIds(roleids);
 
         return R.ok(UserEntity.class).setData(user);
+    }
+
+    /**
+     * 启用/禁用
+     */
+    @GetMapping("/test")
+    public R test() {
+
+
+        return R.ok();
     }
 
 

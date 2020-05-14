@@ -28,6 +28,11 @@ spring:
           uri: lb://simple-module-fileupload
           predicates:
             - Path=/fileupload/**
+        - id: simple-module-job
+          uri: lb://simple-module-job
+          predicates:
+            - Path=/job/**
+
 
 
 logging:

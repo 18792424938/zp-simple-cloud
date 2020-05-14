@@ -2,26 +2,20 @@ server:
   port: 9130
 eureka:
   instance:
-    hostname: simple-module-job
+    hostname: localhost
   client:
-    register-with-eureka: false #不向注册中心注册自己
-    fetch-registry: false #自己就是服务不检索服务
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+      defaultZone: http://localhost:7000/eureka
 spring:
   application:
-    name: 定时任务
+    name: simple-module-job
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
     druid:
-      #url: jdbc:postgresql://192.168.1.166:7777/gs_wuye
-      #url: jdbc:postgresql://114.116.17.114:7777/gs_wuye
-      #username: jfwy
-      #password: tongruan@123
-      url: jdbc:postgresql://192.168.0.205:5432/gs_wuye
-      username: gs
-      password: jjxliu306
+      url: jdbc:postgresql://114.116.17.114:7777/simple_zhaipan
+      username: jfwy
+      password: tongruan@123
       initial-size: 10
       max-active: 30
       min-idle: 10
@@ -47,3 +41,18 @@ spring:
         wall:
           config:
             multi-statement-allow: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  typeAliasesPackage: com.zp.*.*.entity
+logging:
+  level:
+    com.zp: debug
+
+feign:
+  hystrix:
+    enabled : true

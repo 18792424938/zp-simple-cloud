@@ -14,4 +14,9 @@ public interface SysOpenFeignUserService {
 
     @GetMapping(value="/sys/user/getLoginUser/{id}")
     public R<UserEntity> getLoginUser(@PathVariable("id") String id);
+
+    @GetMapping(value="/sys/user/test")
+    public R<UserEntity> test();
+
+
 }

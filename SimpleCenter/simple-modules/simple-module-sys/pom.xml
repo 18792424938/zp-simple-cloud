@@ -45,6 +45,8 @@
             <optional>true</optional>
         </dependency>
 
+
+        <!--自己的-->
         <dependency>
             <groupId>com.zp</groupId>
             <artifactId>simple-api-sys</artifactId>
@@ -66,7 +68,7 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-
+        <!--自己的-->
 
 
 
