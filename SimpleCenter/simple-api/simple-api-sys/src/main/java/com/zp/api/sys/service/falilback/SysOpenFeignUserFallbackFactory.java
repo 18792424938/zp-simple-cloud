@@ -1,7 +1,6 @@
-package com.zp.api.sys.service.fallback;
+package com.zp.api.sys.service.falilback;
 
 
-import com.zp.api.sys.entity.UserEntity;
 import com.zp.api.sys.service.SysOpenFeignUserService;
 import com.zp.api.sys.service.impl.SysOpenFeignUserServiceImpl;
 import feign.hystrix.FallbackFactory;

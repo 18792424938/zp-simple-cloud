@@ -1,4 +1,4 @@
-package com.zp.api.sys.service.fallback;
+package com.zp.api.sys.service.falilback;
 
 
 import com.zp.api.sys.service.SysOpenFeignRoleService;

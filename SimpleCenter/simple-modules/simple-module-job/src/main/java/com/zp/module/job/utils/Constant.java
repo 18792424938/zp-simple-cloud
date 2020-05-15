@@ -3,7 +3,7 @@ package com.zp.module.job.utils;
 /**
  * 常量
  * 
- * @author  lyf
+ * @author  zhaipan
  * @date 2017年11月15日 下午1:23:52
  */
 public class Constant {

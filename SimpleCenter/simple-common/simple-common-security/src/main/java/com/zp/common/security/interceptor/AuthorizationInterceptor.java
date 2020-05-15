@@ -56,6 +56,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             logger.info("request is feign . url:[{}]" , request.getRequestURI());
             // 放行 但顺带把feigntoken清空
             //@TODO
+            request.setAttribute(FeignConfig.NO_VALID_TOKEN,FeignConfig.NO_VALID_TOKEN);
             return true ;
         }
 
@@ -73,11 +74,15 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
             throw  new RRException(e.getMessage(), HttpStatus.UNAUTHORIZED.value());
         }
 
+        //放入用户
+        UserEntity userEntity = authUtils.getUser();
+
+        request.setAttribute("user",userEntity);
+
         if("admin".equals(tokenVO.getId())){
             return true;
         }
 
-        UserEntity userEntity = authUtils.getUser();
         if(20 == userEntity.getStatus()){
             throw  new RRException("用户已被禁用", HttpStatus.UNAUTHORIZED.value());
         }

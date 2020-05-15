@@ -3,7 +3,7 @@ package com.zp.api.sys.service;
 
 import com.zp.api.sys.constants.SysConstants;
 import com.zp.api.sys.entity.UserEntity;
-import com.zp.api.sys.service.fallback.SysOpenFeignUserFallbackFactory;
+import com.zp.api.sys.service.falilback.SysOpenFeignUserFallbackFactory;
 import com.zp.common.core.util.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

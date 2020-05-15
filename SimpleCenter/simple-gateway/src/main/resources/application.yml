@@ -32,6 +32,14 @@ spring:
           uri: lb://simple-module-job
           predicates:
             - Path=/job/**
+        - id: simple-module-log
+          uri: lb://simple-module-log
+          predicates:
+            - Path=/log/**
+
+
+
+
 
 
 

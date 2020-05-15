@@ -17,6 +17,7 @@
         <module>simple-module-job</module>
         <module>simple-module-auth</module>
         <module>simple-module-fileupload</module>
+        <module>simple-module-log</module>
     </modules>
 
 

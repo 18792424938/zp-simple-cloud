@@ -19,7 +19,7 @@ public interface ScheduleJobDao extends BaseMapper<ScheduleJobEntity> {
 	 * 批量更新状态
 	 */
 	@Update("<script>" +
-			"update qrtz.schedule_job set status = #{status} where job_id in " + 
+			"update qrtz.schedule_job set status = #{status} where id in " +
 			"		<foreach item='jobId' collection='jobIds'  open='(' separator=',' close=')'> " + 
 			"			#{jobId} " + 
 			"		</foreach>" + 

@@ -14,6 +14,8 @@ import com.zp.api.sys.enums.SysEnum;
 import com.zp.api.sys.vo.PasswordVO;
 import com.zp.common.core.util.PagerUtil;
 import com.zp.common.core.util.RedisUtils;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.module.sys.service.UserRoleService;
@@ -73,6 +75,7 @@ public class UserController {
     /**
      * 列表
      */
+    @SysLog(value = "用户列表",system = SysModule.sys)
     @GetMapping("/list")
     @ApiOperation("用户表列表")
     @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)
