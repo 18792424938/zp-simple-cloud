@@ -78,7 +78,7 @@ public class UploadFileEntity {
      */
     @TableField("preview_url")
     @ApiModelProperty("预览地址")
-    private String preview_url;
+    private String previewUrl;
 
     /**
      * 10:已完成(不用转码),20:,上传完毕,30:转码中,40:已转码

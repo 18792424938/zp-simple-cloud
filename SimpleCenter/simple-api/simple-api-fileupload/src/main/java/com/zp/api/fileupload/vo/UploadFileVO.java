@@ -11,4 +11,6 @@ public class UploadFileVO {
     private String id;
     private String name;
     private String url;
+    private Integer encode;
+    private String previewUrl;
 }

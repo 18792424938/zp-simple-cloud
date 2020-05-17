@@ -48,6 +48,45 @@ public class FileUploadUtilFastdfsImpl implements FileUploadUtil {
     }
 
     @Override
+    public UploadFileEntity uploadFile(InputStream inputStream,String suffix) throws Exception {
+
+
+        byte[] bs = IOUtils.toByteArray(inputStream);
+
+        // 1、把FastDFS提供的jar包添加到工程中
+        // String url =
+        // FastdfsUtils.class.getClassLoader().getResource("fdfs_client.conf").getPath();
+
+        // 2、初始化全局配置。加载一个配置文件。
+
+        // 3、创建一个TrackerClient对象。
+        TrackerClient trackerClient = new TrackerClient();
+        // 4、创建一个TrackerServer对象。
+        TrackerServer trackerServer = trackerClient.getConnection();
+        // 5、声明一个StorageServer对象，null。
+        StorageServer storageServer = null ;
+
+        // 判断配置的storageServer是否为空 不为空这里开始回填
+        if(StringUtils.isNotBlank(this.storageServer)) {
+            String[] ss = this.storageServer.split(":");
+            String ip = ss[0];
+            int port = Integer.valueOf(ss[1]);
+            storageServer = new StorageServer(ip, port, 0);
+        }
+
+        // 6、获得StorageClient对象。
+        StorageClient storageClient = new StorageClient(trackerServer, storageServer);
+        // 7、直接调用StorageClient对象方法上传文件即可。
+        String[] resource = storageClient.upload_file(bs, suffix, null);
+
+        UploadFileEntity uploadFileEntity = new UploadFileEntity();
+
+        uploadFileEntity.setPreviewUrl( nginxUrl +  resource[0]+"/"+resource[1]);
+
+        return uploadFileEntity;
+    }
+
+    @Override
     public UploadFileEntity uploadFile(MultipartFile file) {
         InputStream input;
         try {

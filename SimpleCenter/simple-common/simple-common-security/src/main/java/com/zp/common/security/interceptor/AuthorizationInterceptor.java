@@ -112,6 +112,6 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         if(peram.contains(perm.trim())) {
             return true;
         }
-        throw new RRException("当前用户无此操作权限", HttpStatus.UNAUTHORIZED.value());
+        throw new RRException("当前用户无此操作权限", HttpStatus.NOT_ACCEPTABLE.value());
     }
 }

@@ -11,6 +11,10 @@ eureka:
 spring:
   application:
     name: simple-module-fileupload
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
@@ -64,7 +68,8 @@ spring:
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
 upload:
-  types: jpg,png
+  encode-server: http://127.0.0.1:8888
+  types: jpg,png,doc,docx,xlsx,xls
   type: fastdfs
   fastdfs:
     # tracker 服务器地址 包含端口

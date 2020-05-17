@@ -1,11 +1,13 @@
 package com.zp.module.fileupload.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zp.api.fileupload.enums.UploadEnum;
 import com.zp.api.fileupload.vo.UploadFileVO;
 import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.R;
 import com.zp.api.fileupload.entity.UploadFileEntity;
 
+import com.zp.module.fileupload.event.OfficeEvent;
 import com.zp.module.fileupload.service.UploadFileService;
 import com.zp.module.fileupload.util.FileUploadUtil;
 import io.swagger.annotations.Api;
@@ -15,6 +17,7 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,8 +44,8 @@ public class FileUploadController {
 	private UploadFileService uploadFileService;
 
 
-
-
+	@Autowired
+	private ApplicationContext applicationContext;
 
 
 	//	@SysLog(value="上传文件",system = SysModule.sys)
@@ -77,17 +80,26 @@ public class FileUploadController {
 			Set<String> set = new HashSet<>();
 			set.addAll(Arrays.asList(this.uploadTypes.split(",")));
 
-			if(!set.contains(suffix)){
+			if(!set.contains(suffix.toLowerCase())){
 				return R.error("不支持["+suffix+"]类型的文件上传");
 			}
 		}
 		//可以随意上传
         try {
-            UploadFileEntity uploadFileEntity = fileUploadUtil.uploadFile(file);
-			uploadFileEntity.setEncode(10);
+
+			UploadFileEntity uploadFileEntity = fileUploadUtil.uploadFile(file);
+
+			uploadFileEntity.setEncode(UploadEnum.UPLOAD_10.getCode());
             uploadFileService.save(uploadFileEntity);
-            UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl());
-            return R.ok().setData(uploadFileVO);
+
+			if(Arrays.asList(new String[]{"doc","docx","xlsx","xls"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())){
+            	//需要转码 扔出去转成pdf
+				OfficeEvent officeEvent = new OfficeEvent(uploadFileEntity.getId());
+				applicationContext.publishEvent(officeEvent);
+			}
+
+            UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl(),uploadFileEntity.getEncode(),uploadFileEntity.getPreviewUrl());
+			return R.ok().setData(uploadFileVO);
         }catch (RRException e){
             return R.error(e.getMsg());
         }
@@ -107,7 +119,7 @@ public class FileUploadController {
 			queryWrapper.orderByDesc("create_date");
             List<UploadFileEntity> list = uploadFileService.list(queryWrapper);
             for (UploadFileEntity uploadFileEntity : list) {
-                UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl());
+                UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl(),uploadFileEntity.getEncode(),uploadFileEntity.getPreviewUrl());
                 uploadFileVOList.add(uploadFileVO);
             }
 		}
@@ -121,7 +133,7 @@ public class FileUploadController {
 	@ApiOperation("返回数据集合")
 	public R<UploadFileVO> findById(String id){
 		UploadFileEntity uploadFileEntity = uploadFileService.getById(id);
-		UploadFileVO uploadFileVO = new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl());
+		UploadFileVO uploadFileVO =  new UploadFileVO(uploadFileEntity.getId(),uploadFileEntity.getRealName(),uploadFileEntity.getFileUrl(),uploadFileEntity.getEncode(),uploadFileEntity.getPreviewUrl());
 		return R.ok(UploadFileVO.class).setData(uploadFileVO);
 	}
 
