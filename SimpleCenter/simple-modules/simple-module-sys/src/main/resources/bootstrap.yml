@@ -1,0 +1,13 @@
+server:
+  port: 9120
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:7000/eureka
+
+spring:
+  application:
+    name: simple-module-sys

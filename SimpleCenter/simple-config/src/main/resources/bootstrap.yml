@@ -1,0 +1,25 @@
+server:
+  port: 8000
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:7000/eureka
+spring:
+  application:
+    name: simple-config
+  #profiles:
+    #active: native
+  cloud:
+    config:
+      server:
+        #native:
+          #search-locations: C:/config 走本地
+        git:
+          uri: https://github.com/18792424938/zp-simple-cloud.git
+          default-label: master #配置文件分支
+          search-paths: config #配置文件所在的根目录
+          username: 18792424938
+          password: zhang123456
+          #basedir: E:\Java_IDEA\config\basedir  可以使用这个配置项来指定本地git仓库的路径 配置文件

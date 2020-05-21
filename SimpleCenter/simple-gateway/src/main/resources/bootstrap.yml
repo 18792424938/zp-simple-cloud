@@ -8,6 +8,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:7000/eureka
 spring:
+  profiles: dev
   application:
     name: simple-gateway
   cloud:
@@ -36,12 +37,6 @@ spring:
           uri: lb://simple-module-log
           predicates:
             - Path=/log/**
-
-
-
-
-
-
 
 logging:
   level:

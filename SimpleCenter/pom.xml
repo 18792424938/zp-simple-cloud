@@ -15,6 +15,7 @@
     <module>simple-common</module>
       <module>simple-eureka</module>
       <module>simple-gateway</module>
+      <module>simple-config</module>
   </modules>
 
 
