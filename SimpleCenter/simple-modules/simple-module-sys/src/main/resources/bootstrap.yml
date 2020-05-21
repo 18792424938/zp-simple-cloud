@@ -9,7 +9,8 @@ eureka:
       defaultZone: http://localhost:7000/eureka
 
 spring:
-  profiles: dev
+  profiles:
+    active: dev
   application:
     name: simple-module-sys
   cloud:

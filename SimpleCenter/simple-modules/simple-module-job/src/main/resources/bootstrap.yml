@@ -1,6 +1,5 @@
 server:
-  port: 9000
-
+  port: 9130
 eureka:
   instance:
     hostname: localhost
@@ -8,10 +7,8 @@ eureka:
     service-url:
       defaultZone: http://localhost:7000/eureka
 spring:
-  profiles:
-    active: dev
   application:
-    name: simple-gateway
+    name: simple-module-job
   cloud:
     config:
       name: application, ${spring.application.name}
@@ -21,4 +18,5 @@ spring:
       discovery:
         enabled: true
         service-id: simple-config
+
 

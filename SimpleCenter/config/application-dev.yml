@@ -57,6 +57,4 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   typeAliasesPackage: com.zp.*.*.entity
-logging:
-  level:
-    com.zp: debug
+
