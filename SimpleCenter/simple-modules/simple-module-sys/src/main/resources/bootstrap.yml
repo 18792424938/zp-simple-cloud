@@ -9,5 +9,15 @@ eureka:
       defaultZone: http://localhost:7000/eureka
 
 spring:
+  profiles: dev
   application:
     name: simple-module-sys
+  cloud:
+    config:
+      name: application, ${spring.application.name}
+      profile: ${spring.profiles.active}
+      uri: http://localhost:8000
+      label: master
+      discovery:
+        enabled: true
+        service-id: simple-config
