@@ -1,0 +1,33 @@
+#网关响应的配置文件
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启动态路由 利用微服务名进行路由
+      routes:
+        - id: simple-module-auth
+          uri: lb://simple-module-auth
+          predicates:
+            - Path=/auth/**
+        - id: simple-module-sys
+          uri: lb://simple-module-sys
+          predicates:
+            - Path=/sys/**
+        - id: simple-module-fileupload
+          uri: lb://simple-module-fileupload
+          predicates:
+            - Path=/fileupload/**
+        - id: simple-module-job
+          uri: lb://simple-module-job
+          predicates:
+            - Path=/job/**
+        - id: simple-module-log
+          uri: lb://simple-module-log
+          predicates:
+            - Path=/log/**
+
+logging:
+  level:
+    com.zp: debug
