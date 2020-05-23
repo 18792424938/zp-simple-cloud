@@ -24,3 +24,16 @@ spring:
           password: zhang123456+-
           #basedir: E:\Java_IDEA\config\basedir  可以使用这个配置项来指定本地git仓库的路径 配置文件
       label: master
+  #rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 15672
+    username: guest
+    password: guest
+#全部通知http://ip:port/actuator/bus-refresh
+#精确通知http://ip:port/actuator/bus-refresh/simple-module-fileupload:port
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'

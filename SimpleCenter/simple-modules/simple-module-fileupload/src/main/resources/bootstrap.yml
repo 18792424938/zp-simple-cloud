@@ -13,7 +13,27 @@ spring:
     active: dev
   application:
     name: simple-module-fileupload
+  cloud:
+    config:
+      name: application, ${spring.application.name}
+      profile: ${spring.profiles.active}
+      uri: http://localhost:8000
+      label: master
+      discovery:
+        enabled: true
+        service-id: simple-config
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  #rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 15672
+    username: guest
+    password: guest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
