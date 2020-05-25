@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zp.api.sys.enums.SysEnum;
 import com.zp.common.core.util.PagerUtil;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
@@ -138,5 +140,44 @@ public class DictController {
 
         return R.ok();
     }
+
+    /**
+     * 根据类型返回所有的字典集合
+     */
+    @GetMapping("/types")
+    @ApiOperation("根据类型返回所有的字典集合")
+    @ApiResponse(code = 0, message = "查询成功", response = DictEntity.class)
+    public R<List> type(String type) {
+
+
+        QueryWrapper<DictEntity> dictEntityQueryWrapper = new QueryWrapper<>();
+        dictEntityQueryWrapper.eq("type",type);
+        dictEntityQueryWrapper.eq("status", SysEnum.DICTSTATUS_10.getCode());
+        dictEntityQueryWrapper.orderByAsc("order_num");
+        List<DictEntity> dictEntityList = dictService.list(dictEntityQueryWrapper);
+
+        return R.ok(List.class).setData(dictEntityList);
+    }
+
+    /**
+     * 根据类型和值 返回对应的实体
+     */
+    @GetMapping("/translateDict")
+    @ApiOperation("根据类型和值 返回对应的实体")
+    @ApiResponse(code = 0, message = "查询成功", response = DictEntity.class)
+    public R<DictEntity> translateDict(String type,String code) {
+
+        QueryWrapper<DictEntity> dictEntityQueryWrapper = new QueryWrapper<>();
+        dictEntityQueryWrapper.eq("type",type);
+        dictEntityQueryWrapper.eq("status", SysEnum.DICTSTATUS_10.getCode());
+        dictEntityQueryWrapper.eq("code", code);
+
+        DictEntity dictEntity = dictService.getOne(dictEntityQueryWrapper);
+
+        return R.ok(DictEntity.class).setData(dictEntity);
+    }
+
+
+
 
 }

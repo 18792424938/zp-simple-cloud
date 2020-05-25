@@ -64,7 +64,7 @@ public class DictEntity implements Serializable {
 	@ApiModelProperty("主键")
 	private String id;
 	/**
-	 * 数字越大越靠前
+	 * 数字越小越靠前
 	 */
 	@TableField("order_num") 
 	@ApiModelProperty("数字越大越靠前")
