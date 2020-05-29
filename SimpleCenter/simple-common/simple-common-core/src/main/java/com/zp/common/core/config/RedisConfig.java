@@ -20,7 +20,7 @@ public class RedisConfig {
     private String host;
     @Value("${spring.redis.port:6379}")
     private int port;
-    @Value("${spring.redis.password:123456}")
+    @Value("${spring.redis.password}")
     private String password;
 
     //连接超时时间 毫秒
