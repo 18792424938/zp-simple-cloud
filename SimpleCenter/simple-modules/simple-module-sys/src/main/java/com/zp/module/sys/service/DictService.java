@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zp.api.sys.entity.DictEntity;
 import com.zp.common.core.util.PagerUtil;
 
+import java.util.Collection;
+
 
 /**
  * 字典表
@@ -18,5 +20,7 @@ import com.zp.common.core.util.PagerUtil;
 public interface DictService extends IService<DictEntity> {
 
     IPage<DictEntity> queryPage(DictEntity Dict, PagerUtil pagerUtil);
+
+
 }
 

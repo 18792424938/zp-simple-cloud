@@ -65,6 +65,8 @@ public class LoginController {
 
         String captcha = redisUtils.get("captcha_"+loginVO.getCode());
         if(captcha!=null){
+            //清除验证码
+            redisUtils.del("captcha_"+loginVO.getCode());
             if(!captcha.toLowerCase().equals(loginVO.getCaptcha().toLowerCase())){
                 return R.error("验证码不正确");
             }

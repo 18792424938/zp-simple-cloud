@@ -18,6 +18,8 @@ import com.zp.api.sys.entity.DictEntity;
 public class DictServiceImpl extends ServiceImpl<DictDao, DictEntity> implements DictService {
 
 
+
+
     public IPage<DictEntity> queryPage(DictEntity Dict, PagerUtil pagerUtil) {
         IPage<DictEntity> ipage = this.page(
                 pagerUtil.getPage(DictEntity.class),
