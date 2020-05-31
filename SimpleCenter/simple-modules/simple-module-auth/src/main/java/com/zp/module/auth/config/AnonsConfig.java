@@ -17,7 +17,7 @@ public class AnonsConfig {
         AnonsUtils anonsUtils = new AnonsUtils();
         anonsUtils.add("/auth/index");
         anonsUtils.add("/auth/login");
-        anonsUtils.add("/auth/captcha");
+        anonsUtils.add("/auth/captcha.jpg");
         return anonsUtils;
     }
 

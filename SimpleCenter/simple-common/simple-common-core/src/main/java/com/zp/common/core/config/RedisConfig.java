@@ -1,5 +1,6 @@
 package com.zp.common.core.config;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ public class RedisConfig {
     private String host;
     @Value("${spring.redis.port:6379}")
     private int port;
-    @Value("${spring.redis.password:#{null}}")
+    @Value("${spring.redis.password}")
     private String password;
 
     //连接超时时间 毫秒
@@ -56,7 +57,7 @@ public class RedisConfig {
             jedisPoolConfig.setMaxTotal(maxTotal);
             // 连接耗尽时是否阻塞, false报异常,true阻塞直到超时, 默认true
             jedisPoolConfig.setBlockWhenExhausted(true);
-            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout,password,database);
+            jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, StringUtils.isNotBlank(password)?password:null,database);
         }
 
         return jedisPool;

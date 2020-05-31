@@ -63,6 +63,7 @@
     <fastjson.version>1.2.68</fastjson.version>
     <jedis.version>3.2.0</jedis.version>
     <fastdfs.client.version>1.27.0.0</fastdfs.client.version>
+    <kaptcha.version>2.3.2</kaptcha.version>
   </properties>
 
   <dependencyManagement>
@@ -150,6 +151,12 @@
         <groupId>net.oschina.zcx7878</groupId>
         <artifactId>fastdfs-client-java</artifactId>
         <version>${fastdfs.client.version}</version>
+      </dependency>
+      <!--验证码-->
+      <dependency>
+        <groupId>com.github.penggle</groupId>
+        <artifactId>kaptcha</artifactId>
+        <version>${kaptcha.version}</version>
       </dependency>
 
     </dependencies>
