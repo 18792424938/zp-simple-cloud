@@ -5,28 +5,25 @@ import com.zp.common.config.util.IPUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * 获取地址类
  *
- * @author ruoyi
+ * @author zhaipan
  */
-@Component
-public class AddressUtils {
-    private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
+public class AddressUtil {
+    private static final Logger log = LoggerFactory.getLogger(AddressUtil.class);
 
     // IP地址查询
-    @Value("${log.url}")
-    private String IP_URL;
+    public static String IP_URL;
+
 
     // 未知地址
-    public  String UNKNOWN = "XX XX";
+    public  static String UNKNOWN = "XX XX";
 
-    public String getRealAddressByIP(String ip) {
+    public static String getRealAddressByIP(String ip) {
 
         String address = UNKNOWN;
         // 内网不查询

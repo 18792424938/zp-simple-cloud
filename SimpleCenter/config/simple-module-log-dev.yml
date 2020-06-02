@@ -1,6 +1,6 @@
 #系统管理的配置文件
 log:
-  url: http://whois.pconline.com.cn/ipJson.jsp
+  baseUrl: http://whois.pconline.com.cn/ipJson.jsp
   sysLog: #系统日志线程池配置
     corePoolSize: 5 #核心线程数
     maxPoolSize: 20 #最大线程数

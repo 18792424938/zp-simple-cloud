@@ -8,7 +8,7 @@ import com.zp.common.core.util.DateUtil;
 import com.zp.common.config.util.PagerUtil;
 import com.zp.module.log.dao.UserLogDao;
 import com.zp.module.log.service.UserLogService;
-import com.zp.module.log.util.AddressUtils;
+import com.zp.module.log.util.AddressUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -19,14 +19,12 @@ import org.springframework.stereotype.Service;
 public class UserLogServiceImpl extends ServiceImpl<UserLogDao, UserLogEntity> implements UserLogService {
 
 
-    @Autowired
-    private AddressUtils addressUtils;
 
 
     @Override
     @Async("asyncSysLogExecutor")
     public boolean saveInfo(UserLogEntity entity) {
-        String realAddressByIP = addressUtils.getRealAddressByIP(entity.getIp());
+        String realAddressByIP = AddressUtil.getRealAddressByIP(entity.getIp());
         entity.setAddress(realAddressByIP);
         return this.save(entity);
     }
