@@ -3,7 +3,7 @@ package com.zp.module.job.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.common.core.util.R;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.module.job.entity.ScheduleJobLogEntity;

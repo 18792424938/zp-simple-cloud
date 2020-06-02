@@ -2,12 +2,12 @@ package com.zp.module.log.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.log.entity.UserLogEntity;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.common.core.util.R;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
-import com.zp.module.log.service.LogService;
 import com.zp.module.log.service.UserLogService;
+import com.zp.module.log.util.AddressUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -32,6 +32,8 @@ public class UserLogController {
 
     @Autowired
     private AuthUtils authUtils;
+
+
 
 
     /**
@@ -72,7 +74,7 @@ public class UserLogController {
         Date date = new Date();
         log.setCreateDate(date);
 
-        userLogService.save(log);
+        userLogService.saveInfo(log);
 
         return R.ok();
     }

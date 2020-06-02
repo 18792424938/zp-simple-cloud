@@ -1,7 +1,6 @@
 package com.zp.module.log.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zp.api.log.entity.LogEntity;
 import com.zp.api.log.entity.UserLogEntity;
 import org.apache.ibatis.annotations.Mapper;
 

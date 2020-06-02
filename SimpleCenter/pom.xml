@@ -64,6 +64,8 @@
     <jedis.version>3.2.0</jedis.version>
     <fastdfs.client.version>1.27.0.0</fastdfs.client.version>
     <kaptcha.version>2.3.2</kaptcha.version>
+    <oshi-core-version>5.1.0</oshi-core-version>
+    <jna-version>5.5.0</jna-version>
   </properties>
 
   <dependencyManagement>
@@ -158,6 +160,24 @@
         <artifactId>kaptcha</artifactId>
         <version>${kaptcha.version}</version>
       </dependency>
+
+      <!--获取系统信息start-->
+      <dependency>
+        <groupId>com.github.oshi</groupId>
+        <artifactId>oshi-core</artifactId>
+        <version>${oshi-core-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>${jna-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna-platform</artifactId>
+        <version>${jna-version}</version>
+      </dependency>
+      <!--获取系统信息end-->
 
     </dependencies>
   </dependencyManagement>

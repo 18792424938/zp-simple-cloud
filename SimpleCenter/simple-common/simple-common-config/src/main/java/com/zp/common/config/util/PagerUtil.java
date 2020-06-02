@@ -1,4 +1,4 @@
-package com.zp.common.core.util;
+package com.zp.common.config.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;

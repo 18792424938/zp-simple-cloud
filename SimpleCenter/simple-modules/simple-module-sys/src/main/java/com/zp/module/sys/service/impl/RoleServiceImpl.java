@@ -3,7 +3,7 @@ package com.zp.module.sys.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.api.sys.entity.RoleMenuEntity;
 import com.zp.api.sys.entity.RoleSystemEntity;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.module.sys.dao.RoleDao;
 import com.zp.module.sys.service.RoleMenuService;
 import com.zp.module.sys.service.RoleService;
@@ -18,7 +18,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import com.zp.api.sys.entity.RoleEntity;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

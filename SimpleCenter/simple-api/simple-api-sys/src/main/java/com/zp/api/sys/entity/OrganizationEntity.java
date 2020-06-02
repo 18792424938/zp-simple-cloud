@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,6 +70,8 @@ public class OrganizationEntity implements Serializable {
 	@TableField("parent_id") 
 	@ApiModelProperty("父id")
 	private String parentId;
+
+
 	/**
 	 * 修改日期
 	 */
@@ -81,5 +84,23 @@ public class OrganizationEntity implements Serializable {
 	@TableField("update_id") 
 	@ApiModelProperty("修改人")
 	private String updateId;
- 
+
+
+
+
+	/**
+	 * 父id名称
+	 */
+	@TableField(exist = false)
+	@ApiModelProperty("父id名称")
+	private String parentName;
+
+
+	/**
+	 * 组织结构子集
+	 */
+	@TableField(exist = false)
+	@ApiModelProperty("组织结构子集")
+	private List<OrganizationEntity> children;
+
 }

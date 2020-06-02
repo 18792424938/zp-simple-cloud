@@ -16,6 +16,7 @@
         <module>simple-common-security</module>
         <module>simple-common-config</module>
         <module>simple-common-log</module>
+        <module>simple-common-base</module>
     </modules>
 
 

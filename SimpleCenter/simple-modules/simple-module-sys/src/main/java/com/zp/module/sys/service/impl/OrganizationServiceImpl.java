@@ -10,10 +10,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.zp.api.sys.entity.OrganizationEntity;
 
+import java.util.List;
 
 
 @Service("organizationService")
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationDao, OrganizationEntity> implements OrganizationService {
+
+    @Override
+    public List<OrganizationEntity> tree() {
+        return  baseMapper.tree();
+    }
 
     public IPage<OrganizationEntity> queryPage(OrganizationEntity Organization , IPage<OrganizationEntity> page ) {
         

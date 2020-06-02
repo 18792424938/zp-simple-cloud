@@ -27,7 +27,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value="sys_log",schema="log")
-public class LogEntity implements Serializable {
+public class LoginLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@TableId
@@ -48,6 +48,32 @@ public class LogEntity implements Serializable {
 	private Date createDate;
 	// 归属系统
 	private String system ;
+
+	/**
+	 * 请求方地址
+	 */
+	private String address;
+	/**
+	 * 请求状态
+	 */
+	private Integer status;
+	/**
+	 * 请求返回的结果
+	 */
+	@TableField("return_result")
+	private String returnResult;
+	/**
+	 * 请求地址
+	 */
+	private String path;
+	/**
+	 * 请求方式
+	 */
+	private String requestType;
+
+
+
+
 
 
 	@TableField(exist = false)

@@ -1,4 +1,17 @@
 #系统管理的配置文件
+log:
+  url: http://whois.pconline.com.cn/ipJson.jsp
+  sysLog: #系统日志线程池配置
+    corePoolSize: 5 #核心线程数
+    maxPoolSize: 20 #最大线程数
+    maxQueue: 100 #最大队列
+    keepAlive: 120 #秒
+  loginLog: #登录日志线程池配置
+    corePoolSize: 5 #核心线程数
+    maxPoolSize: 20 #最大线程数
+    maxQueue: 100 #最大队列
+    keepAlive: 120 #秒
+
 
 logging:
   level:

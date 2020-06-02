@@ -3,7 +3,7 @@ package com.zp.module.fileupload.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.api.fileupload.entity.UploadFileEntity;
 
 

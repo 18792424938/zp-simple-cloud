@@ -3,13 +3,14 @@ package com.zp.common.log.aspect;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import com.zp.api.log.entity.LogEntity;
 import com.zp.api.log.entity.UserLogEntity;
+import com.zp.api.log.enums.LogEnum;
 import com.zp.api.log.service.LogOpenFeignLogService;
 import com.zp.api.sys.entity.UserEntity;
 import com.zp.common.config.config.FeignConfig;
 import com.zp.common.config.util.IPUtils;
 import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.event.LogEvent;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -48,7 +50,7 @@ public class SysUserLogAspect {
 	private String system;
 
 	@Autowired
-	private LogOpenFeignLogService logOpenFeignLogService;
+	private ApplicationContext applicationContext;
 
  
 	@Pointcut("@annotation(com.zp.common.log.annotation.SysLog)")
@@ -59,26 +61,45 @@ public class SysUserLogAspect {
 	@Around("logPointCut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
 		long beginTime = System.currentTimeMillis();
-		//执行方法
-		Object result = point.proceed();
-		//执行时长(毫秒)
-		long time = System.currentTimeMillis() - beginTime;
 
+		Object result= null;
+		boolean runstatus = true;
 		try {
-			//保存日志
-			this.saveSysLog(point,time);
+			result = point.proceed();
 		}catch (Exception e){
 			e.getStackTrace();
+			runstatus = false;
+		}finally {
+			//执行时长(毫秒)
+			long time = System.currentTimeMillis() - beginTime;
+			try {
+				String resultstr = "";
+				if(result!=null){
+					try {
+						resultstr = JSONObject.toJSONString(result);
+					}catch (Exception e){
+						e.getStackTrace();
+					}
+				}
+				//保存日志
+				this.saveSysLog(point,time,runstatus,resultstr);
+			}catch (Exception e){
+				e.getStackTrace();
+			}
 		}
-
 		return result;
 	}
 
-	private void saveSysLog(ProceedingJoinPoint joinPoint, long time) {
+	private void saveSysLog(ProceedingJoinPoint joinPoint, long time,boolean runstatus,String resultstr) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 
 		UserLogEntity sysLog = new UserLogEntity();
+
+		sysLog.setReturnResult(resultstr);
+
+		sysLog.setStatus(runstatus? LogEnum.LOGSTATUS_10.getCode():LogEnum.LOGSTATUS_20.getCode());
+
 		SysLog syslog = method.getAnnotation(SysLog.class);
 		if(syslog != null){
 			//注解上的描述
@@ -132,6 +153,13 @@ public class SysUserLogAspect {
 		//设置IP地址
 		sysLog.setIp(IPUtils.getIpAddr(request));
 
+		//设置请求地址
+		sysLog.setMethod(request.getRequestURI());
+
+		//获取请求方式
+		sysLog.setRequestType(request.getMethod());
+
+
 		Object user_ = request.getAttribute("user");
 
 		if(user_ != null && user_ instanceof UserEntity) {
@@ -153,7 +181,10 @@ public class SysUserLogAspect {
 		sysLog.setCreateDate(new Date());
 
 		sysLog.setSystem(system);
+
+		//系统日志
+		LogEvent logEvent = new LogEvent(sysLog,"10");
 		//保存系统日志
-		logOpenFeignLogService.saveUserLog(sysLog);
+		applicationContext.publishEvent(logEvent);
 	}
 }

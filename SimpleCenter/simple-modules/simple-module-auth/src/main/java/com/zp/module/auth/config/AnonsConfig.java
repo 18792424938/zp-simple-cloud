@@ -18,6 +18,7 @@ public class AnonsConfig {
         anonsUtils.add("/auth/index");
         anonsUtils.add("/auth/login");
         anonsUtils.add("/auth/captcha.jpg");
+        anonsUtils.add("/base/info");
         return anonsUtils;
     }
 

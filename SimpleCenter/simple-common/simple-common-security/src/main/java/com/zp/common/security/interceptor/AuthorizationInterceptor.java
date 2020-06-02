@@ -8,7 +8,6 @@ import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.JwtUtil;
 import com.zp.common.security.annotation.RequiresPermissions;
 
-import com.zp.common.security.utils.AnonsUtils;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.common.security.utils.HttpContextUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,12 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

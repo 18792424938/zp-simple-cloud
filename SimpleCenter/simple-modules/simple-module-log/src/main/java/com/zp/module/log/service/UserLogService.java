@@ -2,9 +2,8 @@ package com.zp.module.log.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zp.api.log.entity.LogEntity;
 import com.zp.api.log.entity.UserLogEntity;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 
 
 /**
@@ -17,5 +16,7 @@ import com.zp.common.core.util.PagerUtil;
 public interface UserLogService extends IService<UserLogEntity> {
 
     IPage<UserLogEntity> queryPage(UserLogEntity Log, PagerUtil pagerUtil);
+
+    boolean saveInfo(UserLogEntity entity);
 }
 

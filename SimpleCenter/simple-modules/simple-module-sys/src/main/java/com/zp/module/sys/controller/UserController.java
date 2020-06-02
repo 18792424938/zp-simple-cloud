@@ -7,17 +7,17 @@ import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.org.apache.regexp.internal.RE;
+import com.zp.api.sys.entity.OrganizationEntity;
 import com.zp.api.sys.entity.UserRoleEntity;
 import com.zp.api.sys.enums.SysEnum;
 import com.zp.api.sys.vo.PasswordVO;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.common.core.util.RedisUtils;
 import com.zp.common.log.annotation.SysLog;
 import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
+import com.zp.module.sys.service.OrganizationService;
 import com.zp.module.sys.service.UserRoleService;
 import com.zp.module.sys.service.UserTokenExpireService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -39,8 +39,6 @@ import com.zp.common.core.util.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户表
@@ -68,6 +66,11 @@ public class UserController {
     @Autowired
     private UserTokenExpireService userTokenExpireService;
 
+    @Autowired
+    private OrganizationService organizationService;
+
+
+
 
 
 
@@ -83,6 +86,12 @@ public class UserController {
 
         IPage<UserEntity> pageData = userService.queryPage(userEntity, pagerUtil);
 
+        for (UserEntity entity : pageData.getRecords()) {
+            OrganizationEntity organizationEntity = organizationService.getById(entity.getOrganizationId());
+            if(organizationEntity!=null){
+                entity.setOrganizationName(organizationEntity.getName());
+            }
+        }
         return R.ok().setData(pageData);
     }
 
@@ -97,6 +106,11 @@ public class UserController {
     public R<UserEntity> info(@PathVariable("id") String id) {
         UserEntity user = userService.getById(id);
 
+        OrganizationEntity organizationEntity = organizationService.getById(user.getOrganizationId());
+        if(organizationEntity!=null){
+            user.setOrganizationName(organizationEntity.getName());
+        }
+
         List<UserRoleEntity> userRoleEntityList = userRoleService.list(new QueryWrapper<UserRoleEntity>().eq("user_id", id));
         List<String> collect = userRoleEntityList.stream().map(p -> p.getRoleId()).collect(Collectors.toList());
         user.setRoleIds(collect);
@@ -106,6 +120,7 @@ public class UserController {
     /**
      * 保存
      */
+    @SysLog(value = "用户保存",system=SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:user:save")
     @ApiOperation("保存用户表信息")
@@ -139,8 +154,9 @@ public class UserController {
     }
 
     /**
-     * 保存
+     * 修改个人信息
      */
+    @SysLog(value = "修改个人信息",system=SysModule.sys)
     @PostMapping("/updateSelf")
     @ApiOperation("保存用户表信息")
     public R<Object> updateSelf(@RequestBody UserEntity user) {
@@ -155,6 +171,7 @@ public class UserController {
     /**
      * 修改
      */
+    @SysLog(value = "修改用户信息",system=SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:user:update")
     @ApiOperation("修改用户表信息")
@@ -177,6 +194,7 @@ public class UserController {
         userEntity.setStatus(user.getStatus());
 
         userEntity.setRoleIds(user.getRoleIds());
+        userEntity.setOrganizationId(user.getOrganizationId());
 
         userService.updateUser(userEntity);
 
@@ -190,6 +208,7 @@ public class UserController {
     /**
      * 修改密码
      */
+    @SysLog(value = "修改密码",system=SysModule.sys)
     @PostMapping("/updatePassword")
     @ApiOperation("修改用户表信息")
     public R<Object> updatePassword(@RequestBody PasswordVO passwordVO) {
@@ -225,6 +244,7 @@ public class UserController {
     /**
      * 重置密码
      */
+    @SysLog(value = "重置密码",system=SysModule.sys)
     @PostMapping("/resetPassword")
     @RequiresPermissions("sys:user:resetPassword")
     @ApiOperation("修改用户表信息")
@@ -260,6 +280,7 @@ public class UserController {
     /**
      * 启用/禁用
      */
+    @SysLog(value = "禁用/启用密码",system=SysModule.sys)
     @GetMapping("/forbidden/{id}")
     @RequiresPermissions("sys:user:forbidden")
     @ApiOperation("修改用户表信息")
@@ -282,6 +303,7 @@ public class UserController {
     /**
      * 删除
      */
+    @SysLog(value = "删除用户",system=SysModule.sys)
     @PostMapping("/delete")
     @RequiresPermissions("sys:user:delete")
     @ApiOperation("删除用户表信息")
@@ -318,16 +340,6 @@ public class UserController {
         user.setRoleIds(roleids);
 
         return R.ok(UserEntity.class).setData(user);
-    }
-
-    /**
-     * 启用/禁用
-     */
-    @GetMapping("/test")
-    public R test() {
-
-
-        return R.ok();
     }
 
 

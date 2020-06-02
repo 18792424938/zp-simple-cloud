@@ -3,24 +3,15 @@ package com.zp.module.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zp.api.sys.entity.SystemEntity;
-import com.zp.api.sys.entity.UserEntity;
-import com.zp.api.sys.entity.UserRoleEntity;
 import com.zp.api.sys.entity.UserTokenExpireEntity;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.common.core.util.RedisUtils;
-import com.zp.module.sys.dao.UserDao;
 import com.zp.module.sys.dao.UserTokenExpireDao;
-import com.zp.module.sys.service.UserRoleService;
-import com.zp.module.sys.service.UserService;
 import com.zp.module.sys.service.UserTokenExpireService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 
 @Service("userTokenExpireService")

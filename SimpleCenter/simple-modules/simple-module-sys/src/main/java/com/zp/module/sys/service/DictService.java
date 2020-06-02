@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 import com.zp.api.sys.entity.DictEntity;
-import com.zp.common.core.util.PagerUtil;
-
-import java.util.Collection;
+import com.zp.common.config.util.PagerUtil;
 
 
 /**

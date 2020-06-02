@@ -1,10 +1,9 @@
  
 package com.zp.module.job.service;
 
-import com.alibaba.druid.sql.PagerUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.module.job.entity.ScheduleJobLogEntity;
 
 

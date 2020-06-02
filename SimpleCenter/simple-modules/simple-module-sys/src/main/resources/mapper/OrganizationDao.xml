@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zp.module.sys.dao.OrganizationDao">
+
+
+    <resultMap id="treeData" type="com.zp.api.sys.entity.OrganizationEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="describe" property="describe"/>
+        <result column="create_id" property="createId"/>
+        <result column="update_id" property="updateId"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
+        <collection property="children" select="treeChildren"  column="{pid=id}">
+        </collection>
+    </resultMap>
+
+
+    <select id="tree" resultMap="treeData">
+        SELECT
+            *
+        FROM sys."sys_organization"
+        where parent_id is null or parent_id = ''
+        order by create_date desc
+    </select>
+
+    <select id="treeChildren"  resultMap="treeData">
+        select
+        *
+        from sys.sys_organization
+       where parent_id = #{pid,jdbcType=VARCHAR}
+        order by create_date desc
+    </select>
+
+
+
+
+</mapper>

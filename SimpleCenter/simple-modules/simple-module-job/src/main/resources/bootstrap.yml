@@ -7,6 +7,8 @@ eureka:
     service-url:
       defaultZone: http://zp:123456@localhost:7000/eureka
 spring:
+  profiles:
+    active: dev
   application:
     name: simple-module-job
   cloud:

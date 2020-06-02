@@ -4,7 +4,9 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * feign调用混入免验证得token
@@ -25,8 +27,8 @@ public class FeignConfig implements RequestInterceptor {
 		// TODO Auto-generated method stub
 		logger.info("template [{}] add feign token." , template.request().url()  );
 		template.header(NO_VALID_HEADER, NO_VALID_TOKEN);
-		
 	}
+
 
 }
  

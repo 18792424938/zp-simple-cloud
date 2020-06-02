@@ -5,6 +5,8 @@ import com.zp.api.sys.entity.OrganizationEntity;
 import org.apache.ibatis.annotations.Mapper; 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * 角色表
  * 
@@ -16,5 +18,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface OrganizationDao extends BaseMapper<OrganizationEntity> {
 	
 	/*推荐在此直接添加注解写sql,可读性比较好*/
-	
+
+
+    List<OrganizationEntity> tree();
+
 }

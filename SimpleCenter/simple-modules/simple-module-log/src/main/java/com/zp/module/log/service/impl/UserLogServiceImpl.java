@@ -3,20 +3,33 @@ package com.zp.module.log.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zp.api.log.entity.LogEntity;
 import com.zp.api.log.entity.UserLogEntity;
 import com.zp.common.core.util.DateUtil;
-import com.zp.common.core.util.PagerUtil;
-import com.zp.module.log.dao.LogDao;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.module.log.dao.UserLogDao;
-import com.zp.module.log.service.LogService;
 import com.zp.module.log.service.UserLogService;
+import com.zp.module.log.util.AddressUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 
 @Service("userLogService")
 public class UserLogServiceImpl extends ServiceImpl<UserLogDao, UserLogEntity> implements UserLogService {
+
+
+    @Autowired
+    private AddressUtils addressUtils;
+
+
+    @Override
+    @Async("asyncSysLogExecutor")
+    public boolean saveInfo(UserLogEntity entity) {
+        String realAddressByIP = addressUtils.getRealAddressByIP(entity.getIp());
+        entity.setAddress(realAddressByIP);
+        return this.save(entity);
+    }
 
     public IPage<UserLogEntity> queryPage(UserLogEntity Log, PagerUtil pagerUtil) {
         IPage<UserLogEntity> ipage = this.page(

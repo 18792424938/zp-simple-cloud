@@ -1,7 +1,7 @@
 package com.zp.module.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.module.sys.dao.DictDao;
 import com.zp.module.sys.service.DictService;
 import org.apache.commons.lang3.StringUtils;

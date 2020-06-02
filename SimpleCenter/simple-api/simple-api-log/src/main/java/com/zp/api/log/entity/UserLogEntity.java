@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value="sys_user_log",schema="log")
+@TableName(value="login_log",schema="log")
 public class UserLogEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,31 @@ public class UserLogEntity implements Serializable {
 	private String system ;
 	//系统名称
 	private String systemName ;
+
+
+	/**
+	 * 请求方地址
+	 */
+	private String address;
+	/**
+	 * 请求状态
+	 */
+	private Integer status;
+	/**
+	 * 请求返回的结果
+	 */
+	@TableField("return_result")
+	private String returnResult;
+	/**
+	 * 请求地址
+	 */
+	private String path;
+	/**
+	 * 请求方式
+	 */
+	private String requestType;
+
+
 
 
 	@TableField(exist = false)

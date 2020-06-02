@@ -2,7 +2,7 @@ package com.zp.module.sys.service.impl;
 
 import com.zp.api.sys.entity.SystemEntity;
 import com.zp.api.sys.entity.UserRoleEntity;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 import com.zp.module.sys.dao.UserDao;
 import com.zp.module.sys.service.UserRoleService;
 import com.zp.module.sys.service.UserService;

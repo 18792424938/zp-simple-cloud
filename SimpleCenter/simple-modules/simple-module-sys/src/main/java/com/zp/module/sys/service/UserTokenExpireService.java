@@ -2,10 +2,8 @@ package com.zp.module.sys.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zp.api.sys.entity.SystemEntity;
-import com.zp.api.sys.entity.UserEntity;
 import com.zp.api.sys.entity.UserTokenExpireEntity;
-import com.zp.common.core.util.PagerUtil;
+import com.zp.common.config.util.PagerUtil;
 
 import java.util.Date;
 

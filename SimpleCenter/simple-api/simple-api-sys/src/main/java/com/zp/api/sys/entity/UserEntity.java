@@ -66,6 +66,7 @@ public class UserEntity implements Serializable {
 	@TableField("organization_id") 
 	@ApiModelProperty("组织id")
 	private String organizationId;
+
 	/**
 	 * 密码
 	 */
@@ -124,8 +125,15 @@ public class UserEntity implements Serializable {
 	@ApiModelProperty("过期时间")
 	private Date expireDate;
 
+	/**
+	 * 组织名称
+	 */
+	@TableField(exist = false)
+	@ApiModelProperty("组织名称")
+	private String organizationName;
 
 
 
- 
+
+
 }

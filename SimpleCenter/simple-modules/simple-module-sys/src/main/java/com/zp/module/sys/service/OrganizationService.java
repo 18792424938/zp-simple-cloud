@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 import com.zp.api.sys.entity.OrganizationEntity;
- 
+
+import java.util.List;
+
 
 /**
  * 角色表
@@ -17,5 +19,8 @@ import com.zp.api.sys.entity.OrganizationEntity;
 public interface OrganizationService extends IService<OrganizationEntity> {
 
     IPage<OrganizationEntity> queryPage(OrganizationEntity Organization, IPage<OrganizationEntity> page);
+
+    List<OrganizationEntity> tree();
+
 }
 
