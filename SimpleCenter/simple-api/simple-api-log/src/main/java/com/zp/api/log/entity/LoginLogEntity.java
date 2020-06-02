@@ -26,7 +26,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value="sys_log",schema="log")
+@TableName(value="login_log",schema="log")
 public class LoginLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

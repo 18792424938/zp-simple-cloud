@@ -10,12 +10,15 @@ import org.springframework.context.annotation.Configuration;
 public class AddressConfig {
 
     // IP地址查询
-    @Value("${syslog.baseUrl}")
+    @Value("${syslog.baseUrl:23}")
     private String IP_URL;
+
+
+
 
     @Bean
     public void  getInstance(){
-        AddressUtil.IP_URL = IP_URL;
+        AddressUtil.IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";
     }
 
 }

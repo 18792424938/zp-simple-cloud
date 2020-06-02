@@ -23,10 +23,10 @@ public class UserLogServiceImpl extends ServiceImpl<UserLogDao, UserLogEntity> i
 
     @Override
     @Async("asyncSysLogExecutor")
-    public boolean saveInfo(UserLogEntity entity) {
+    public void saveInfo(UserLogEntity entity) {
         String realAddressByIP = AddressUtil.getRealAddressByIP(entity.getIp());
         entity.setAddress(realAddressByIP);
-        return this.save(entity);
+        this.save(entity);
     }
 
     public IPage<UserLogEntity> queryPage(UserLogEntity Log, PagerUtil pagerUtil) {

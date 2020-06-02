@@ -41,6 +41,10 @@ public class AddressUtil {
             JSONObject obj = JSONObject.parseObject(forEntity.getBody());
             String region = obj.getString("pro");
             String city = obj.getString("city");
+            String addr = obj.getString("addr");
+            if(StringUtils.isNotBlank(addr)){
+                return addr;
+            }
             return String.format("%s %s", region, city);
         } catch (Exception e) {
             log.error("获取地理位置异常 {}", e);

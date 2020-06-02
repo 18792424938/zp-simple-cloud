@@ -17,6 +17,6 @@ public interface UserLogService extends IService<UserLogEntity> {
 
     IPage<UserLogEntity> queryPage(UserLogEntity Log, PagerUtil pagerUtil);
 
-    boolean saveInfo(UserLogEntity entity);
+    void saveInfo(UserLogEntity entity);
 }
 

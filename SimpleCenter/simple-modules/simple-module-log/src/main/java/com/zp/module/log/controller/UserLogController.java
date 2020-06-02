@@ -1,5 +1,6 @@
 package com.zp.module.log.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.log.entity.UserLogEntity;
 import com.zp.common.config.util.PagerUtil;
@@ -58,7 +59,8 @@ public class UserLogController {
     @ApiOperation("根据ID获取字典表信息")
     @ApiResponse(code = 0, message = "查询成功", response = UserLogEntity.class)
     public R<UserLogEntity> info(@PathVariable("id") String id) {
-        UserLogEntity log = userLogService.getById(id);
+
+        UserLogEntity log = userLogService.getById(Long.valueOf(id));
 
         return R.ok(UserLogEntity.class).setData(log);
     }
