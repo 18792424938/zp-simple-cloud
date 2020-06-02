@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class AddressConfig {
 
     // IP地址查询
-    @Value("${log.baseUrl}")
+    @Value("${syslog.baseUrl}")
     private String IP_URL;
 
     @Bean
