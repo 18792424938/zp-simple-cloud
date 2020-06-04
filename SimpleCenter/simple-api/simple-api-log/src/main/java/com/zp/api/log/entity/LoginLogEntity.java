@@ -31,50 +31,60 @@ public class LoginLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@TableId
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	private Long id;
 	//用户名
 	@TableField("username")
 	private String username;
-	//请求方法
-	private String method;
-	//请求参数
-	private String params;
-	//执行时长(毫秒)
-	private Long time;
 	//IP地址
+	@TableField("ip")
 	private String ip;
-	//创建时间
-	@TableField("create_date")
-	private Date createDate;
-	// 归属系统
-	private String system ;
 
 	/**
 	 * 请求方地址
 	 */
+	@TableField("address")
 	private String address;
 	/**
-	 * 请求状态
+	 * 登录结果 10,登录成功.20登录失败
 	 */
+	@TableField("status")
 	private Integer status;
 	/**
-	 * 请求返回的结果
+	 * 登录结果信息
 	 */
-	@TableField("return_result")
-	private String returnResult;
+	@TableField("info")
+	private String info;
+
 	/**
-	 * 请求地址
+	 * 客户端操作系统
 	 */
-	private String path;
+	@TableField("system")
+	private String system;
+
 	/**
-	 * 请求方式
+	 * 浏览器
 	 */
-	private String requestType;
+	@TableField("browser")
+	private String browser;
+
+	/**
+	 * 具体版本
+	 */
+	@TableField("browser_version")
+	private String browserVersion;
 
 
+	/**
+	 * 验证码
+	 */
+	@TableField("captcha")
+	private String captcha;
 
 
-
+	//创建时间
+	@TableField("create_date")
+	private Date createDate;
 
 	@TableField(exist = false)
 	private String startDate;
@@ -84,6 +94,4 @@ public class LoginLogEntity implements Serializable {
 	private String endDate;
 
 
-
-	
 }

@@ -59,7 +59,7 @@ public class LoginLogController {
     @ApiOperation("根据ID获取字典表信息")
     @ApiResponse(code = 0, message = "查询成功", response = LoginLogEntity.class)
     public R<LoginLogEntity> info(@PathVariable("id") String id) {
-        LoginLogEntity log = logService.getById(id);
+        LoginLogEntity log = logService.getById(Long.valueOf(id));
 
         return R.ok(LoginLogEntity.class).setData(log);
     }
@@ -73,7 +73,6 @@ public class LoginLogController {
     public R<Object> save(@RequestBody LoginLogEntity log) {
         Date date = new Date();
         log.setCreateDate(date);
-
 
         logService.saveInfo(log);
 

@@ -11,6 +11,10 @@ import oshi.SystemInfo;
 @RestController
 @RequestMapping("/base")
 public class BaseController {
+    /**
+     * 初始化当前应用所在在服务器参数
+     * @return
+     */
     @GetMapping("/info")
     public R info(){
         ServerVO serverVO = ServerUtil.init();

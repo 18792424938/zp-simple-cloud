@@ -37,7 +37,6 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogDao, LoginLogEntity
                 .like(StringUtils.isNotBlank(Log.getUsername()),"username",Log.getUsername())
                 .like(StringUtils.isNotBlank(Log.getIp()),"ip",Log.getIp())
                 .like(StringUtils.isNotBlank(Log.getSystem()),"system",Log.getSystem())
-                .like(StringUtils.isNotBlank(Log.getMethod()),"method",Log.getMethod())
                 .ge(DateUtil.parseDate(Log.getStartDate())!=null,"create_date",DateUtil.parseDate(Log.getStartDate()))
                 .le(DateUtil.parseDate(Log.getEndDate())!=null,"create_date",DateUtil.parseDate(Log.getEndDate()))
                 .orderByDesc("create_date")

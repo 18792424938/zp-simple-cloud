@@ -66,6 +66,7 @@
     <kaptcha.version>2.3.2</kaptcha.version>
     <oshi-core-version>5.1.0</oshi-core-version>
     <jna-version>5.5.0</jna-version>
+    <userAgentUtils.version>1.21</userAgentUtils.version>
   </properties>
 
   <dependencyManagement>
@@ -178,6 +179,14 @@
         <version>${jna-version}</version>
       </dependency>
       <!--获取系统信息end-->
+
+
+      <!--获取UserAgent header-->
+      <dependency>
+        <groupId>eu.bitwalker</groupId>
+        <artifactId>UserAgentUtils</artifactId>
+        <version>${userAgentUtils.version}</version>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
