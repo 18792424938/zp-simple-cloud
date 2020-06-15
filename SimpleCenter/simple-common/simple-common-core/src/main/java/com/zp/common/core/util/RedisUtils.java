@@ -118,6 +118,32 @@ public class RedisUtils {
     }
 
 	/**
+	 * 查看过期时间
+	 */
+	public String ttl(String key){
+		if(open) {
+			String value = "";
+			Jedis jedis = jedisPool.getResource();
+			try {
+				value = jedis.ttl(key).toString();
+			}catch (Exception e){
+				e.getStackTrace();
+			}finally {
+				jedis.close();
+			}
+			return value;
+		}else{
+			long ct = System.currentTimeMillis();
+			Long aLong = cache_expire.get(key);
+			if(aLong>ct){
+				return String.valueOf((aLong-ct)/1000);
+			}else{
+				return "0";
+			}
+		}
+	}
+
+	/**
 	 * 获取
 	 * @param key
 	 * @param clazz

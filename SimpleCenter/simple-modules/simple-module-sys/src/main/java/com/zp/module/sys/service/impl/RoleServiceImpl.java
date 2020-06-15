@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zp.api.sys.entity.RoleMenuEntity;
 import com.zp.api.sys.entity.RoleSystemEntity;
 import com.zp.common.config.util.PagerUtil;
+import com.zp.common.core.util.RedisUtils;
 import com.zp.module.sys.dao.RoleDao;
 import com.zp.module.sys.service.RoleMenuService;
 import com.zp.module.sys.service.RoleService;
@@ -32,6 +33,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, RoleEntity> implements
     private RoleMenuService roleMenuService;
 
 
+
+
+
+
     @Override
     public void saveAuth(RoleEntity roleEntity) {
 
@@ -58,8 +63,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, RoleEntity> implements
         if (roleMenuEntities.size()>0){
             roleMenuService.saveBatch(roleMenuEntities);
         }
-
-
 
     }
 
@@ -144,6 +147,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, RoleEntity> implements
         if (roleMenuEntities.size()>0){
             roleMenuService.saveBatch(roleMenuEntities);
         }
+
+
+
     }
 
     public IPage<RoleEntity> queryPage(RoleEntity Role , PagerUtil pagerUtil ) {

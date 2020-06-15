@@ -1,15 +1,16 @@
 package com.zp.module.sys.controller;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.MenuEntity;
+import com.zp.api.sys.entity.RoleMenuEntity;
 import com.zp.api.sys.entity.SystemEntity;
+import com.zp.common.core.util.RedisUtils;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
+import com.zp.module.sys.service.RoleMenuService;
 import com.zp.module.sys.service.SystemService;
 import com.zp.module.sys.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +44,11 @@ import io.swagger.annotations.ApiResponse;
 public class MenuController {
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private RoleMenuService roleMenuService;
+
+
     @Autowired
     private UserService userService;
 
@@ -52,6 +58,9 @@ public class MenuController {
 
     @Autowired
     private AuthUtils authUtils;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     /**
      * 列表
@@ -129,6 +138,14 @@ public class MenuController {
 
         menuService.updateById(menu);
 
+
+        //处理缓存
+        QueryWrapper<RoleMenuEntity> roleMenuEntityQueryWrapper = new QueryWrapper<>();
+        roleMenuEntityQueryWrapper.eq("menu_id",menu.getId());
+        List<RoleMenuEntity> list = roleMenuService.list(roleMenuEntityQueryWrapper);
+        for (RoleMenuEntity roleMenuEntity : list) {
+            redisUtils.del("requiresPermissions_"+roleMenuEntity.getId());
+        }
         return R.ok();
     }
 
@@ -149,6 +166,15 @@ public class MenuController {
         }
 
         menuService.deleteById(id);
+
+
+        //处理缓存
+        QueryWrapper<RoleMenuEntity> roleMenuEntityQueryWrapper = new QueryWrapper<>();
+        roleMenuEntityQueryWrapper.eq("menu_id",id);
+        List<RoleMenuEntity> list = roleMenuService.list(roleMenuEntityQueryWrapper);
+        for (RoleMenuEntity roleMenuEntity : list) {
+            redisUtils.del("requiresPermissions_"+roleMenuEntity.getId());
+        }
 
         return R.ok();
     }
@@ -190,7 +216,13 @@ public class MenuController {
             List<MenuEntity> nav = menuService.nav(systemEntity.getId());
             systemEntity.setChildren(nav);
         }
-        return R.ok().setData(systemEntity);
+
+        Set<String> userTokenPerms = authUtils.getUserTokenPerms(authUtils.getUserId());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("systemEntity",systemEntity);
+        map.put("perms",userTokenPerms);
+        return R.ok().setData(map);
     }
 
 

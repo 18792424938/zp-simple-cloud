@@ -165,14 +165,6 @@ public class LoginController {
         return R.ok().setData(user);
     }
 
-    @GetMapping("/nav")
-    public R nav(){
-        UserEntity user = authUtils.getUser();
-        user.setRoleIds(null);
-        //加密jwt
-        return R.ok().setData(user);
-    }
-
 
 
 

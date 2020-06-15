@@ -7,6 +7,7 @@ import com.zp.api.auth.vo.TokenVO;
 import com.zp.api.sys.entity.UserEntity;
 import com.zp.api.sys.service.SysOpenFeignRoleService;
 import com.zp.api.sys.service.SysOpenFeignUserService;
+import com.zp.common.config.config.SpringContextUtils;
 import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.JwtUtil;
 import com.zp.common.core.util.R;
@@ -37,6 +38,15 @@ public class AuthUtils {
 
 	@Resource
 	private RedisUtils redisUtils;
+
+	public void initService(){
+		if(this.sysOpenFeignRoleService==null){
+			this.sysOpenFeignRoleService = SpringContextUtils.getBean(SysOpenFeignRoleService.class);
+		}
+		if(this.sysOpenFeignUserService==null){
+			this.sysOpenFeignUserService = SpringContextUtils.getBean(SysOpenFeignUserService.class);
+		}
+	}
 
 
 
@@ -107,13 +117,14 @@ public class AuthUtils {
 	public UserEntity getUser(String userId) {
 
 
-		UserEntity userEntity = redisUtils.get("login_" + userId,UserEntity.class);
+		UserEntity userEntity = redisUtils.get("login_" + userId,UserEntity.class,3600);
 		if(userEntity!=null){
 			logger.info("从redis中获取用户信息[{}]",userEntity);
 			return userEntity;
 		}
 
 
+		this.initService();
 		R<UserEntity> r = sysOpenFeignUserService.getLoginUser(userId);
 		UserEntity loginUser = r.getData();
 		if(loginUser!=null){
@@ -137,6 +148,7 @@ public class AuthUtils {
 				if(perms!=null&&perms.size()>0){
 					requiresPermissions.addAll(perms);
 				}else{
+					this.initService();
 					R<Set> r = sysOpenFeignRoleService.getLoginRole(roleId);
 					Set<String> data = r.getData();
 					if(data!=null&&data.size()>0){

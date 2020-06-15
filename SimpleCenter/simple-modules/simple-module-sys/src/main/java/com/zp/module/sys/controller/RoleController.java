@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.*;
 import com.zp.common.config.util.PagerUtil;
+import com.zp.common.core.util.RedisUtils;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
+import com.zp.common.security.utils.BaseInitUtil;
 import com.zp.module.sys.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +60,9 @@ public class RoleController {
 
     @Autowired
     private AuthUtils authUtils;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
 
     /**
@@ -145,14 +150,7 @@ public class RoleController {
     @ApiOperation("保存角色表信息")
     public R<Object> save(@RequestBody RoleEntity role) {
 
-        String userId = authUtils.getUserId();
-        Date date = new Date();
-        role.setCreateId(userId);
-        role.setCreateDate(date);
-        role.setUpdateId(userId);
-        role.setUpdateDate(date);
-
-
+        BaseInitUtil.createInit(role);
         roleService.saveAuth(role);
 
         return R.ok();
@@ -165,12 +163,9 @@ public class RoleController {
     @RequiresPermissions("sys:role:update")
     @ApiOperation("修改角色表信息")
     public R<Object> update(@RequestBody RoleEntity role) {
-        String userId = authUtils.getUserId();
-        Date date = new Date();
-        role.setUpdateId(userId);
-        role.setUpdateDate(date);
+        BaseInitUtil.updateInit(role);
         roleService.updateAuth(role);
-
+        redisUtils.del("requiresPermissions_"+role.getId());
         return R.ok();
     }
 
@@ -183,7 +178,9 @@ public class RoleController {
     public R<Object> delete(@RequestBody String[] ids) {
 
         roleService.removeByMyIds(Arrays.asList(ids));
-
+        for (String id : ids) {
+            redisUtils.del("requiresPermissions_"+id);
+        }
         return R.ok();
     }
 

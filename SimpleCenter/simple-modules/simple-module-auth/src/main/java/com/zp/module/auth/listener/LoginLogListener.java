@@ -35,7 +35,12 @@ public class LoginLogListener {
 	@EventListener
 	public void onApplicationEvent(LoginLogEvent event) {
         logger.info("登录日志");
-        logOpenFeignLogService.saveLoginLog((LoginLogEntity)event.getSource());
+        try{
+			logOpenFeignLogService.saveLoginLog((LoginLogEntity)event.getSource());
+		}catch (Exception e){
+        	e.getStackTrace();
+		}
+
 	}
 
 
