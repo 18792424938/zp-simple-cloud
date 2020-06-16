@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 用户表
  * 
@@ -19,4 +21,6 @@ public interface UserDao extends BaseMapper<UserEntity> {
 	
 	/*推荐在此直接添加注解写sql,可读性比较好*/
     SystemEntity userSystem(@Param("userId") String userId);
+
+    List<SystemEntity> userSystemList(@Param("userId") String userId);
 }

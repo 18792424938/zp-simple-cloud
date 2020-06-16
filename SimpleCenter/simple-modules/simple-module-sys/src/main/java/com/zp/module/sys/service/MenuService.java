@@ -22,7 +22,7 @@ public interface MenuService extends IService<MenuEntity> {
 
     Set<String> findByRoleId(String roleId);
     List<MenuEntity> tree(String systemId);
-    List<MenuEntity> nav(String systemId);
+    List<MenuEntity> nav(String systemId,String userId);
     void deleteById(String id);
 }
 

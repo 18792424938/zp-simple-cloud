@@ -202,10 +202,10 @@ public class MenuController {
 
         SystemEntity systemEntity = null;
 
-        if (StringUtils.isNotBlank(systemId)) {
+        List<String> systemIds= userService.userSystemIds(userId);
+        if (systemIds.contains(systemId)){
             systemEntity = systemService.getById(systemId);
-        }
-        if(systemEntity==null){
+        }else{
             systemEntity = userService.userSystem(userId);
         }
 
@@ -213,10 +213,9 @@ public class MenuController {
             return R.error("您没有任何权限,请联系管理员");
         }else{
             //查询该系统下的所有菜单
-            List<MenuEntity> nav = menuService.nav(systemEntity.getId());
+            List<MenuEntity> nav = menuService.nav(systemEntity.getId(),userId);
             systemEntity.setChildren(nav);
         }
-
         Set<String> userTokenPerms = authUtils.getUserTokenPerms(authUtils.getUserId());
 
         Map<String,Object> map = new HashMap<>();

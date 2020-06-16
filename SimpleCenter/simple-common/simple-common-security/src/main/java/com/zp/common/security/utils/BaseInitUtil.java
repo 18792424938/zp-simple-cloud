@@ -23,7 +23,7 @@ public class BaseInitUtil {
         AuthUtils authUtils = SpringContextUtils.getBean(AuthUtils.class);
         String userId = authUtils.getUserId();
         Date date = new Date();
-        baseEntity.setCreateId(userId);
+        baseEntity.setUpdateDate(date);
         baseEntity.setUpdateId(userId);
     }
 

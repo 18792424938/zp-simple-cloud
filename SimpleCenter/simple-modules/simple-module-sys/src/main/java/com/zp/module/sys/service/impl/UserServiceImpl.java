@@ -18,6 +18,7 @@ import com.zp.api.sys.entity.UserEntity;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service("userService")
@@ -59,6 +60,18 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public SystemEntity userSystem(String userId) {
         return baseMapper.userSystem(userId);
+    }
+
+    @Override
+    public List<SystemEntity> userSystemList(String userId) {
+        return baseMapper.userSystemList(userId);
+    }
+
+    @Override
+    public List<String> userSystemIds(String userId) {
+        List<SystemEntity> systemEntities = this.userSystemList(userId);
+        List<String> collect = systemEntities.stream().map(p -> p.getId()).collect(Collectors.toList());
+        return collect;
     }
 
     @Override

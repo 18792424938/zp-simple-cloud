@@ -44,8 +44,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuEntity> implements
     }
 
     @Override
-    public List<MenuEntity> nav(String systemId) {
-        return baseMapper.nav(systemId);
+    public List<MenuEntity> nav(String systemId,String userId) {
+        return baseMapper.nav(systemId,userId);
     }
 
 

@@ -8,6 +8,8 @@ import com.zp.api.sys.entity.SystemEntity;
 import com.zp.api.sys.entity.UserEntity;
 import com.zp.common.config.util.PagerUtil;
 
+import java.util.List;
+
 
 /**
  * 用户表
@@ -21,7 +23,8 @@ public interface UserService extends IService<UserEntity> {
     IPage<UserEntity> queryPage(UserEntity User, PagerUtil pagerUtil);
     UserEntity findByUsername(String username);
     SystemEntity userSystem(String userId);
-
+    List<SystemEntity> userSystemList(String userId);
+    List<String> userSystemIds(String userId);
     void saveUser(UserEntity userEntity);
     void updateUser(UserEntity userEntity);
 
