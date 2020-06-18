@@ -144,7 +144,7 @@ public class MenuController {
         roleMenuEntityQueryWrapper.eq("menu_id",menu.getId());
         List<RoleMenuEntity> list = roleMenuService.list(roleMenuEntityQueryWrapper);
         for (RoleMenuEntity roleMenuEntity : list) {
-            redisUtils.del("requiresPermissions_"+roleMenuEntity.getId());
+            redisUtils.del("requiresPermissions_"+roleMenuEntity.getRoleId());
         }
         return R.ok();
     }
@@ -173,7 +173,7 @@ public class MenuController {
         roleMenuEntityQueryWrapper.eq("menu_id",id);
         List<RoleMenuEntity> list = roleMenuService.list(roleMenuEntityQueryWrapper);
         for (RoleMenuEntity roleMenuEntity : list) {
-            redisUtils.del("requiresPermissions_"+roleMenuEntity.getId());
+            redisUtils.del("requiresPermissions_"+roleMenuEntity.getRoleId());
         }
 
         return R.ok();

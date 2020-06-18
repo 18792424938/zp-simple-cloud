@@ -15,4 +15,7 @@ public interface SysOpenFeignRoleService {
 
     @GetMapping(value="/sys/role/getLoginRole/{id}")
     public R<Set> getLoginRole(@PathVariable("id") String id);
+
+    @GetMapping(value="/sys/role/getLoginRoleAll")
+    public R<Set> getLoginRoleAll();
 }

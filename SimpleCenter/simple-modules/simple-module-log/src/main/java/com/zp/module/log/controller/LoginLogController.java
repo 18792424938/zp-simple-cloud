@@ -55,7 +55,6 @@ public class LoginLogController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @RequiresPermissions("sys:log:info")
     @ApiOperation("根据ID获取字典表信息")
     @ApiResponse(code = 0, message = "查询成功", response = LoginLogEntity.class)
     public R<LoginLogEntity> info(@PathVariable("id") String id) {

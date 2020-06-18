@@ -94,5 +94,30 @@ public class CommonController {
     }
 
 
+    /**
+     * 在线用户列表
+     */
+    @SysLog(value = "在线用户列表",system = SysModule.sys)
+    @GetMapping("/onlineuser")
+    @ApiOperation("在线用户列表")
+    @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)
+    public R onlineuser(String username) {
+        Set<String> keys = new HashSet<>();
+        if(StringUtils.isNotBlank(username)){
+            keys = redisUtils.keys("login_*" + username + "*");
+        }else{
+            keys = redisUtils.keys("login_*");
+        }
+
+        List<UserEntity> list = new LinkedList<>();
+
+        for (String key : keys) {
+            UserEntity userEntity = redisUtils.get(key,UserEntity.class);
+            list.add(userEntity);
+        }
+
+        return R.ok().setData(list);
+    }
+
 
 }

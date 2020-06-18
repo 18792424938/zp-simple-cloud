@@ -36,6 +36,12 @@ public class SysOpenFeignRoleServiceImpl implements SysOpenFeignRoleService {
 
 
     @Override
+    public R<Set> getLoginRoleAll() {
+        logger.error(SysConstants.SERVICE, SysOpenFeignRoleServiceImpl.class,"getLoginRole请求失败{}" , this.cause);
+        return R.error(Set.class);
+    }
+
+    @Override
     public R<Set> getLoginRole(String id) {
         logger.error(SysConstants.SERVICE, SysOpenFeignRoleServiceImpl.class,"getLoginRole请求失败{}" , this.cause);
         return R.error(Set.class);

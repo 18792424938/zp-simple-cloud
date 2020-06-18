@@ -14,7 +14,12 @@
         on sr.id = srm.role_id
         left join sys.sys_menu sm
         on srm.menu_id = sm.id
-        where sr.id =  #{roleId,jdbcType=VARCHAR} and sm.perms is not null and sm.perms &lt;&gt; ''
+        <where>
+            <if test="roleId!=null">
+                sr.id =  #{roleId,jdbcType=VARCHAR} and
+            </if>
+            sm.perms is not null and sm.perms &lt;&gt; ''
+        </where>
     </select>
 
 
@@ -59,7 +64,7 @@
 
 
 
-    <resultMap id="navData" type="com.nfct.api.sys.entity.MenuEntity">
+    <resultMap id="navData" type="com.zp.api.sys.entity.MenuEntity">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="parent_id" property="parentId"/>
@@ -79,53 +84,84 @@
 
 
     <select id="nav"  resultMap="navData">
-        SELECT
-        sm.*,
-        #{userId} as userId
-        FROM `sys_user` su
-        LEFT JOIN `sys_user_role` sur
-        ON su.`id` = sur.`user_id`
-        LEFT JOIN `sys_role` sr
-        ON sur.`role_id` = sr.`id`
-        LEFT JOIN `sys_role_menu` srm
-        ON sr.`id` = srm.`role_id`
-        LEFT JOIN `sys_menu` sm
-        ON srm.`menu_id` = sm.id
-        <where>
-            <if test="userId!='admin'">
+
+        <if test="userId!='admin'">
+            SELECT
+            sm.*,
+            #{userId} as userId
+            FROM sys.sys_user su
+            LEFT JOIN sys.sys_user_role sur
+            ON su.id = sur.user_id
+            LEFT JOIN sys.sys_role sr
+            ON sur.role_id = sr.id
+            LEFT JOIN sys.sys_role_menu srm
+            ON sr.id = srm.role_id
+            LEFT JOIN sys.sys_menu sm
+            ON srm.menu_id = sm.id
+            <where>
                 su.id = #{userId,jdbcType=VARCHAR}  AND
-            </if>
-            (sm.parent_id IS NULL OR sm.parent_id = '') AND
-            sm.system_id = #{systemId,jdbcType=VARCHAR} AND
-            sm.id IS NOT NULL AND
-            sm.enabled = 10
-        </where>
-        group by sm.id
-        order by order_num,create_date
+                (sm.parent_id IS NULL OR sm.parent_id = '') AND
+                sm.system_id = #{systemId,jdbcType=VARCHAR} AND
+                sm.id IS NOT NULL AND
+                sm.enabled = 10
+            </where>
+            group by sm.id
+            order by order_num,create_date
+        </if>
+        <if test="userId=='admin'">
+            SELECT
+            sm.*,
+            #{userId} as userId
+            FROM sys.sys_menu sm
+            <where>
+                (sm.parent_id IS NULL OR sm.parent_id = '') AND
+                sm.system_id = #{systemId,jdbcType=VARCHAR} AND
+                sm.id IS NOT NULL AND
+                sm.enabled = 10
+            </where>
+            group by sm.id
+            order by order_num,create_date
+        </if>
+
+
     </select>
     <select id="navChildren"  resultMap="navData">
-        SELECT
-        sm.*,
-        #{userId} as userId
-        FROM `sys_user` su
-        LEFT JOIN `sys_user_role` sur
-        ON su.`id` = sur.`user_id`
-        LEFT JOIN `sys_role` sr
-        ON sur.`role_id` = sr.`id`
-        LEFT JOIN `sys_role_menu` srm
-        ON sr.`id` = srm.`role_id`
-        LEFT JOIN `sys_menu` sm
-        ON srm.`menu_id` = sm.id
-        <where>
-            <if test="userId!='admin'">
+        <if test="userId!='admin'">
+            SELECT
+            sm.*,
+            #{userId} as userId
+            FROM sys.sys_user su
+            LEFT JOIN sys.sys_user_role sur
+            ON su.id = sur.user_id
+            LEFT JOIN sys.sys_role sr
+            ON sur.role_id = sr.id
+            LEFT JOIN sys.sys_role_menu srm
+            ON sr.id = srm.role_id
+            LEFT JOIN sys.sys_menu sm
+            ON srm.menu_id = sm.id
+            <where>
                 su.id = #{userId,jdbcType=VARCHAR}  AND
-            </if>
-            parent_id = #{pid,jdbcType=VARCHAR} AND
-            sm.id IS NOT NULL AND
-            sm.enabled = 10
-        </where>
-        group by sm.id
-        ORDER BY order_num,create_date
+                sm.parent_id = #{pid,jdbcType=VARCHAR} AND
+                sm.id IS NOT NULL AND
+                sm.enabled = 10
+            </where>
+            group by sm.id
+            ORDER BY order_num,create_date
+        </if>
+        <if test="userId=='admin'">
+            SELECT
+            sm.*,
+            #{userId} as userId
+            FROM  sys.sys_menu sm
+            <where>
+                sm.parent_id = #{pid,jdbcType=VARCHAR} AND
+                sm.id IS NOT NULL AND
+                sm.enabled = 10
+            </where>
+            ORDER BY order_num,create_date
+        </if>
+
+
     </select>
 
 

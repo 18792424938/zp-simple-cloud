@@ -138,6 +138,11 @@ public class AuthUtils {
 
 	public Set<String> getUserTokenPerms(String userId) {
 
+		this.initService();
+
+		if("admin".equals(userId)){
+			return sysOpenFeignRoleService.getLoginRoleAll().getData();
+		}
 
 		UserEntity userEntity = this.getUser(userId);
 		List<String> roleIds = userEntity.getRoleIds();
@@ -148,7 +153,6 @@ public class AuthUtils {
 				if(perms!=null&&perms.size()>0){
 					requiresPermissions.addAll(perms);
 				}else{
-					this.initService();
 					R<Set> r = sysOpenFeignRoleService.getLoginRole(roleId);
 					Set<String> data = r.getData();
 					if(data!=null&&data.size()>0){

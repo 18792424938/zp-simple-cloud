@@ -195,6 +195,19 @@ public class RoleController {
         return R.ok(Set.class).setData(set);
     }
 
+    /**
+     * 返回所有权限
+     */
+    @GetMapping("/getLoginRoleAll")
+    @ApiOperation("返回所有权限")
+    @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)
+    public R<Set> getLoginRoleAll() {
+        Set<String> set = meunService.findByRoleId(null);
+        return R.ok(Set.class).setData(set);
+    }
+
+
+
 
 
 

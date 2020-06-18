@@ -101,7 +101,6 @@ public class SystemController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @RequiresPermissions("sys:system:info")
     @ApiOperation("根据ID获取系统表信息")
     @ApiResponse(code = 0, message = "查询成功", response = SystemEntity.class)
     public R<SystemEntity> info(@PathVariable("id") String id) {

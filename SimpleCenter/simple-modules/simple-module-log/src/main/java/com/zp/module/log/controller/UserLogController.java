@@ -55,7 +55,6 @@ public class UserLogController {
      * 信息
      */
     @GetMapping("/info/{id}")
-    @RequiresPermissions("sys:userLog:info")
     @ApiOperation("根据ID获取字典表信息")
     @ApiResponse(code = 0, message = "查询成功", response = UserLogEntity.class)
     public R<UserLogEntity> info(@PathVariable("id") String id) {

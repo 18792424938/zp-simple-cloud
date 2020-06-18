@@ -21,15 +21,15 @@
     </select>
 
 
-    <select id="userSystemList" resultType="com.nfct.api.sys.entity.SystemEntity">
+    <select id="userSystemList" resultType="com.zp.api.sys.entity.SystemEntity">
         SELECT
             ss.*
-        FROM sys_user su
-        left JOIN sys_user_role sur
+        FROM sys.sys_user su
+        left JOIN sys.sys_user_role sur
         on su.id = sur.user_id
-        left join sys_role_system srs
+        left join sys.sys_role_system srs
         on sur.role_id = srs.role_id
-        left join sys_system ss
+        left join sys.sys_system ss
         on srs.system_id = ss.id
         where su.id = #{userId,jdbcType=VARCHAR} and ss.id is not null
         GROUP BY ss.id
