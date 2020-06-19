@@ -1,0 +1,17 @@
+#系统管理的配置文件
+
+upload:
+  encode-server: http://127.0.0.1:8888
+  types: jpg,png,doc,docx,xlsx,xls
+  type: fastdfs
+  fastdfs:
+    # tracker 服务器地址 包含端口
+    tracker_server: 114.116.30.229:22122
+    # storage 服务器地址 包含端口 可以为空
+    storage_server:
+    # fastdfs 安装服务器对外的nginx暴漏地址
+    nginx_url: http://114.116.30.229
+
+logging:
+  level:
+    com.zp: debug

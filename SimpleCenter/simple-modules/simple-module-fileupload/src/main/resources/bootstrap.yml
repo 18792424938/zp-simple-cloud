@@ -10,7 +10,7 @@ eureka:
 
 spring:
   profiles:
-    active: dev
+    active: prod
   application:
     name: simple-module-fileupload
   cloud:

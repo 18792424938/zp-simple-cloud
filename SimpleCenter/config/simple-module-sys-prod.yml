@@ -1,0 +1,5 @@
+#系统管理的配置文件
+
+logging:
+  level:
+    com.zp: debug

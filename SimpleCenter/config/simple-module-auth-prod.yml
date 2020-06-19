@@ -1,0 +1,32 @@
+#系统管理的配置文件
+
+
+ribbon:
+  eureka:
+    enabled: true
+  ConnectTimeout: 12000 #单位ms,请求连接超时时间  建立链接的时间
+  ReadTimeout: 1500 #单位ms,请求处理的超时时间 链接建立成功处理时间
+  OkToRetryOnAllOperations: true #对所有操作请求都进行重试
+  MaxAutoRetriesNextServer: 3 #切换实例的重试次数
+  MaxAutoRetries: 2  #对当前实例的重试次数
+
+feign:
+  hystrix:
+    enabled : true
+hystrix:
+  threadpool:
+    default:
+      coreSize: 10
+      maxQueueSize: 100 #BlockingQueue的最大队列数，默认值-1
+      queueSizeRejectionThreshold: 110
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000 #设置调用者执行的超时时间（单位毫秒） 默认1000
+
+
+logging:
+  level:
+    com.zp: debug
