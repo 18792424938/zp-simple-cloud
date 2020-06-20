@@ -36,7 +36,7 @@ public class ServerController {
      */
     @GetMapping("/list")
     public R list(){
-        List serverList = redisUtils.get("serverList", List.class);
+        List serverList = redisUtils.get("serverList", List.class,300);
         if(serverList==null){
             serverList = new ArrayList();
         }
@@ -83,6 +83,6 @@ public class ServerController {
 
             }
         }
-        redisUtils.set("serverList",list);
+        redisUtils.set("serverList",list,300);
     }
 }

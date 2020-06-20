@@ -25,6 +25,10 @@ import java.util.Properties;
  * 2020年6月1日11:20:28
  */
 public class ServerUtil {
+
+
+    static Logger logger = LoggerFactory.getLogger(ServerUtil.class);
+
     private static final int OSHI_WAIT_SECOND = 300;
 
     public static void main(String[] args){
@@ -113,6 +117,17 @@ public class ServerUtil {
             ipAdd = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             ipAdd = "127.0.0.1";
+        }
+        try {
+            logger.info("--------------------------------------------");
+            logger.info("--------------------------------------------");
+            logger.info("--------------------------------------------");
+            logger.info("---------------"+InetAddress.getLocalHost().getHostAddress()+"---------------------");
+            logger.info("--------------------------------------------");
+            logger.info("--------------------------------------------");
+            logger.info("--------------------------------------------");
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
         }
 
         Properties props = System.getProperties();

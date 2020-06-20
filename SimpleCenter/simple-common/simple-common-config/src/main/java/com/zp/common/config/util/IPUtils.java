@@ -8,6 +8,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
 
 /**
  * IP地址
@@ -25,6 +26,23 @@ public class IPUtils {
      * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，X-Forwarded-For中第一个非unknown的有效IP字符串，则为真实IP地址
      */
     public static String getIpAddr(HttpServletRequest request) {
+
+        logger.info("--------------------------------------------");
+        logger.info("--------------------------------------------");
+        logger.info("--------------------------------------------");
+        logger.info("---------------"+ request.getHeader("x-forwarded-for") +"---------------------");
+        logger.info("---------------"+ request.getHeader("Proxy-Client-IP") +"---------------------");
+        logger.info("---------------"+ request.getHeader("WL-Proxy-Client-IP") +"---------------------");
+        logger.info("---------------"+ request.getHeader("HTTP_CLIENT_IP") +"---------------------");
+        logger.info("---------------"+ request.getHeader("HTTP_X_FORWARDED_FOR") +"---------------------");
+        logger.info("---------------"+ request.getHeader("X-Real-IP") +"---------------------");
+        logger.info("---------------"+ request.getHeader("X-Real-IP") +"---------------------");
+        logger.info("---------------"+ request.getRemoteAddr() +"---------------------");
+        logger.info("--------------------------------------------");
+        logger.info("--------------------------------------------");
+        logger.info("--------------------------------------------");
+
+
         String ip = null;
         try {
             ip = request.getHeader("x-forwarded-for");
