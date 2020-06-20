@@ -76,4 +76,45 @@
 
     </dependencies>
 
+    <build>
+        <finalName>simple-log</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <imageName>${project.artifactId}</imageName>
+                    <baseImage>openjdk:8u212-jdk</baseImage>
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+
+
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>指定该Main Class为全局的唯一入口
+                    <mainClass>com.alt.eureka.AlatingEurekaApplication</mainClass>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <layout>ZIP</layout>
+                </configuration>
+            </plugin> -->
+
+
+        </plugins>
+    </build>
+
 </project>

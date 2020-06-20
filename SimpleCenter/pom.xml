@@ -67,6 +67,8 @@
     <oshi-core-version>5.1.0</oshi-core-version>
     <jna-version>5.5.0</jna-version>
     <userAgentUtils.version>1.21</userAgentUtils.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencyManagement>
@@ -192,23 +194,58 @@
   </dependencyManagement>
 
   <build>
+    <finalName>${project.name}</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+          <configuration>
+            <finalName>${project.build.finalName}</finalName>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>1.2.0</version>
+          <configuration>
+            <imageName>${project.artifactId}</imageName>
+            <baseImage>openjdk:8u212-jdk</baseImage>
+            <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+            <resources>
+              <resource>
+                <targetPath>/</targetPath>
+                <directory>${project.build.directory}</directory>
+                <include>${project.build.finalName}.jar</include>
+              </resource>
+            </resources>
+          </configuration>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <fork>true</fork>
-          <addResources>true</addResources>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <target>${maven.compiler.target}</target>
+          <source>${maven.compiler.source}</source>
+          <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>2.2.5</version>
       </plugin>
     </plugins>
   </build>
