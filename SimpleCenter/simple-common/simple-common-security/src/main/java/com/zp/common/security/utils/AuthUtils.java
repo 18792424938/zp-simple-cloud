@@ -30,10 +30,9 @@ public class AuthUtils {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Resource
 	private SysOpenFeignUserService sysOpenFeignUserService;
 
-	@Resource
+
 	private SysOpenFeignRoleService sysOpenFeignRoleService;
 
 	@Resource
