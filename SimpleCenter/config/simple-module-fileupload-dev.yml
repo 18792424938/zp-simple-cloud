@@ -1,16 +1,16 @@
 #系统管理的配置文件
 
 upload:
-  encode-server: http://127.0.0.1:8888
+  encode-server: http://127.0.0.1:8888 #转pdf
   types: jpg,png,doc,docx,xlsx,xls
   type: fastdfs
   fastdfs:
     # tracker 服务器地址 包含端口
     tracker_server: 114.116.30.229:22122
-    # storage 服务器地址 包含端口 可以为空
-    storage_server:
-    # fastdfs 安装服务器对外的nginx暴漏地址
-    nginx_url: http://114.116.30.229
+    charset: UTF-8
+    http_anti_steal_token: false #防盗链
+    http_secret_key: FastDFS1234567890 #秘钥
+    nginx_url: http://114.116.30.229 #用于最终生成的问价绝对路径
 
 logging:
   level:

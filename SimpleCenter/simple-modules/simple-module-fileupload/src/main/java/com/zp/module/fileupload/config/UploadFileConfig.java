@@ -15,18 +15,25 @@ public class UploadFileConfig {
 
     @Value("${upload.type}")
     private String type;
-    @Value("${upload.fastdfs.tracker_server}")
+    @Value("${upload.fastdfs.tracker_server:''}")
     private String tracker_server;
-    @Value("${upload.fastdfs.storage_server}")
-    private String storage_server;
+    @Value("${upload.fastdfs.charset:UTF-8}")
+    private String charset;
+    @Value("${upload.fastdfs.http_anti_steal_token:false}")
+    private boolean http_anti_steal_token;
+    @Value("${upload.fastdfs.http_secret_key:123456}")
+    private String http_secret_key;
     @Value("${upload.fastdfs.nginx_url}")
-    private String nginxUrl;
+    private String nginx_url;
+
+
+
 
     @Bean
     public FileUploadUtil getFileUploadUtil(){
         FileUploadUtil fileUploadUtil = null;
         if (StringUtils.isBlank(type)||"fastdfs".equals(type)){//已经进行了配置
-            fileUploadUtil = new FileUploadUtilFastdfsImpl(tracker_server,storage_server,nginxUrl);
+            fileUploadUtil = new FileUploadUtilFastdfsImpl(tracker_server,charset,http_anti_steal_token,http_secret_key,nginx_url);
         }else{//或者本地
 
         }
