@@ -280,7 +280,7 @@ public class UserController {
     /**
      * 启用/禁用
      */
-    @SysLog(value = "禁用/启用密码",system=SysModule.sys)
+    @SysLog(value = "禁用/启用用户",system=SysModule.sys)
     @GetMapping("/forbidden/{id}")
     @RequiresPermissions("sys:user:forbidden")
     @ApiOperation("修改用户表信息")

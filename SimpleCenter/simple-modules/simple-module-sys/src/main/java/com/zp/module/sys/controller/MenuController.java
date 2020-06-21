@@ -8,6 +8,8 @@ import com.zp.api.sys.entity.MenuEntity;
 import com.zp.api.sys.entity.RoleMenuEntity;
 import com.zp.api.sys.entity.SystemEntity;
 import com.zp.common.core.util.RedisUtils;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.module.sys.service.RoleMenuService;
@@ -108,6 +110,7 @@ public class MenuController {
     /**
      * 保存
      */
+    @SysLog(value = "菜单保存",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:menu:save")
     @ApiOperation("保存菜单表信息")
@@ -126,6 +129,7 @@ public class MenuController {
     /**
      * 修改
      */
+    @SysLog(value = "菜单修改",system=SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:menu:update")
     @ApiOperation("修改菜单表信息")
@@ -153,6 +157,7 @@ public class MenuController {
     /**
      * 删除
      */
+    @SysLog(value = "菜单删除",system=SysModule.sys)
     @GetMapping("/delete/{id}")
     @RequiresPermissions("sys:menu:delete")
     @ApiOperation("删除菜单表信息")

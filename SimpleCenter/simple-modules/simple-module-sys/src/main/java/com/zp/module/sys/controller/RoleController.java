@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.*;
 import com.zp.common.config.util.PagerUtil;
 import com.zp.common.core.util.RedisUtils;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.common.security.utils.BaseInitUtil;
@@ -145,6 +147,7 @@ public class RoleController {
     /**
      * 保存
      */
+    @SysLog(value = "角色保存",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:role:save")
     @ApiOperation("保存角色表信息")
@@ -159,6 +162,7 @@ public class RoleController {
     /**
      * 修改
      */
+    @SysLog(value = "角色修改",system=SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:role:update")
     @ApiOperation("修改角色表信息")
@@ -172,6 +176,7 @@ public class RoleController {
     /**
      * 删除
      */
+    @SysLog(value = "角色删除",system=SysModule.sys)
     @PostMapping("/delete")
     @RequiresPermissions("sys:role:delete")
     @ApiOperation("删除角色表信息")

@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.RoleSystemEntity;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,6 +69,7 @@ public class RoleSystemController {
     /**
      * 保存
      */
+    @SysLog(value = "保存角色和系统关系",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:rolesystem:save")
         @ApiOperation("保存角色系统表信息") 
@@ -79,6 +82,7 @@ public class RoleSystemController {
     /**
      * 修改
      */
+    @SysLog(value = "修改角色和菜单关系",system= SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:rolesystem:update")
         @ApiOperation("修改角色系统表信息") 
@@ -91,6 +95,7 @@ public class RoleSystemController {
     /**
      * 删除
      */
+    @SysLog(value = "删除角色和菜单关系",system= SysModule.sys)
     @PostMapping("/delete")
     @RequiresPermissions("sys:rolesystem:delete")
         @ApiOperation("删除角色系统表信息") 

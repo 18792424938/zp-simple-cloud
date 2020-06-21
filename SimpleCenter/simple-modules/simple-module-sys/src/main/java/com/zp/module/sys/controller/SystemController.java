@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.*;
 import com.zp.common.config.util.PagerUtil;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.module.sys.service.*;
@@ -112,6 +114,7 @@ public class SystemController {
     /**
      * 保存
      */
+    @SysLog(value = "系统保存",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:system:save")
     @ApiOperation("保存系统表信息")
@@ -131,6 +134,7 @@ public class SystemController {
     /**
      * 修改
      */
+    @SysLog(value = "系统修改",system= SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:system:update")
     @ApiOperation("修改系统表信息")
@@ -147,6 +151,7 @@ public class SystemController {
     /**
      * 删除
      */
+    @SysLog(value = "系统删除",system= SysModule.sys)
     @GetMapping("/delete/{id}")
     @RequiresPermissions("sys:system:delete")
     @ApiOperation("删除系统表信息")

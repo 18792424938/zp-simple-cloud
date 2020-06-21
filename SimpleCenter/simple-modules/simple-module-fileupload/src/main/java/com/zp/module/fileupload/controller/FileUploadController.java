@@ -7,6 +7,8 @@ import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.R;
 import com.zp.api.fileupload.entity.UploadFileEntity;
 
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.module.fileupload.event.OfficeEvent;
 import com.zp.module.fileupload.service.UploadFileService;
 import com.zp.module.fileupload.util.FileUploadUtil;
@@ -48,7 +50,7 @@ public class FileUploadController {
 	private ApplicationContext applicationContext;
 
 
-	//	@SysLog(value="上传文件",system = SysModule.sys)
+	@SysLog(value="上传文件",system = SysModule.upload)
 	@PostMapping("/upload")
 	@ResponseBody
 	@ApiOperation("上传文件,返回文件的最终浏览地址-PC/APP")

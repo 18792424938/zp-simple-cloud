@@ -5,6 +5,8 @@ package com.zp.module.job.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.common.config.util.PagerUtil;
 import com.zp.common.core.util.R;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.module.job.entity.ScheduleJobEntity;
 import com.zp.module.job.service.ScheduleJobService;
@@ -47,6 +49,7 @@ public class ScheduleJobController {
 	/**
 	 * 保存定时任务
 	 */
+	@SysLog(value = "定时任务新增",system= SysModule.job)
 	@PostMapping("/save")
 	@RequiresPermissions("job:schedule:save")
 	public R<Object> save(@RequestBody ScheduleJobEntity scheduleJob){
@@ -59,6 +62,7 @@ public class ScheduleJobController {
 	/**
 	 * 修改定时任务
 	 */
+	@SysLog(value = "定时任务修改",system= SysModule.job)
 	@PostMapping("/update")
 	@RequiresPermissions("job:schedule:update")
 	public R<Object> update(@RequestBody ScheduleJobEntity scheduleJob){
@@ -71,6 +75,7 @@ public class ScheduleJobController {
 	/**
 	 * 删除定时任务
 	 */
+	@SysLog(value = "定时任务删除",system= SysModule.job)
 	@PostMapping("/delete")
 	@RequiresPermissions("job:schedule:delete")
 	public R<Object> delete(@RequestBody Long[] jobIds){
@@ -82,6 +87,7 @@ public class ScheduleJobController {
 	/**
 	 * 立即执行任务
 	 */
+	@SysLog(value = "定时任务立即执行",system= SysModule.job)
 	@PostMapping("/run")
 	@RequiresPermissions("job:schedule:run")
 	public R<Object> run(@RequestBody Long[] jobIds){
@@ -93,6 +99,7 @@ public class ScheduleJobController {
 	/**
 	 * 暂停定时任务
 	 */
+	@SysLog(value = "定时任务暂停",system= SysModule.job)
 	@PostMapping("/pause")
 	@RequiresPermissions("job:schedule:pause")
 	public R<Object> pause(@RequestBody Long[] jobIds){
@@ -104,6 +111,7 @@ public class ScheduleJobController {
 	/**
 	 * 恢复定时任务
 	 */
+	@SysLog(value = "定时任务恢复",system= SysModule.job)
 	@PostMapping("/resume")
 	@RequiresPermissions("job:schedule:resume")
 	public R<Object> resume(@RequestBody Long[] jobIds){

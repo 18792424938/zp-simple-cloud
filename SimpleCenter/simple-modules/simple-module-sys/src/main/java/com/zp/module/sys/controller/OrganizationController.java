@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -86,6 +88,7 @@ public class OrganizationController {
     /**
      * 保存
      */
+    @SysLog(value = "组织机构保存",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:organization:save")
     @ApiOperation("保存角色表信息")
@@ -105,6 +108,7 @@ public class OrganizationController {
     /**
      * 修改
      */
+    @SysLog(value = "组织机构修改",system=SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:organization:update")
     @ApiOperation("修改角色表信息")
@@ -121,6 +125,7 @@ public class OrganizationController {
     /**
      * 删除
      */
+    @SysLog(value = "组织机构删除",system=SysModule.sys)
     @GetMapping("/delete/{id}")
     @RequiresPermissions("sys:organization:delete")
     @ApiOperation("删除角色表信息")

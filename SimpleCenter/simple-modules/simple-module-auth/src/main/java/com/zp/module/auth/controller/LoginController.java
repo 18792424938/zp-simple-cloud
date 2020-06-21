@@ -14,6 +14,8 @@ import com.zp.common.core.exception.RRException;
 import com.zp.common.core.util.JwtUtil;
 import com.zp.common.core.util.R;
 import com.zp.common.core.util.RedisUtils;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.utils.AuthUtils;
 import com.zp.module.auth.event.LoginLogEvent;
 import com.zp.module.auth.service.LoginService;
@@ -54,6 +56,7 @@ public class LoginController {
 
     @Autowired
     private ApplicationContext applicationContext;
+
 
 
 

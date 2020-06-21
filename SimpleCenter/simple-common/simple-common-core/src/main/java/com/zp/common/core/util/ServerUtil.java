@@ -118,17 +118,7 @@ public class ServerUtil {
         } catch (UnknownHostException e) {
             ipAdd = "127.0.0.1";
         }
-        try {
-            logger.info("--------------------------------------------");
-            logger.info("--------------------------------------------");
-            logger.info("--------------------------------------------");
-            logger.info("---------------"+InetAddress.getLocalHost().getHostAddress()+"---------------------");
-            logger.info("--------------------------------------------");
-            logger.info("--------------------------------------------");
-            logger.info("--------------------------------------------");
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+
 
         Properties props = System.getProperties();
         serverVO.setServerComputerName(hostName);

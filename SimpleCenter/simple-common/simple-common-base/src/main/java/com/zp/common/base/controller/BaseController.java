@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import oshi.SystemInfo;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 @RestController
 @RequestMapping("/base")
 public class BaseController {
@@ -19,6 +22,12 @@ public class BaseController {
     public R info(){
         ServerVO serverVO = ServerUtil.init();
         return R.ok().setData(serverVO);
+
+    }
+
+    public static void main(String[] args) throws UnknownHostException {
+
+        InetAddress.getLocalHost().getHostAddress();
 
     }
 }

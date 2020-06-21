@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.enums.SysEnum;
 import com.zp.common.config.util.PagerUtil;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.common.security.utils.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,7 @@ public class DictController {
     /**
      * 保存
      */
+    @SysLog(value = "字典表保存",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:dict:save")
     @ApiOperation("保存字典表信息")
@@ -95,6 +98,7 @@ public class DictController {
     /**
      * 保存
      */
+    @SysLog(value = "字典表批量保存",system=SysModule.sys)
     @PostMapping("/saveAll")
     @RequiresPermissions("sys:dict:save")
     @ApiOperation("保存字典表信息")
@@ -116,6 +120,7 @@ public class DictController {
     /**
      * 修改
      */
+    @SysLog(value = "字典表修改",system=SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:dict:update")
     @ApiOperation("修改字典表信息")
@@ -132,6 +137,7 @@ public class DictController {
     /**
      * 删除
      */
+    @SysLog(value = "字典表删除",system=SysModule.sys)
     @PostMapping("/delete")
     @RequiresPermissions("sys:dict:delete")
     @ApiOperation("删除字典表信息")

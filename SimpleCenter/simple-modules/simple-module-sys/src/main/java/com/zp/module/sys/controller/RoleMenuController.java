@@ -3,6 +3,8 @@ package com.zp.module.sys.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zp.api.sys.entity.RoleMenuEntity;
 import com.zp.common.core.util.R;
+import com.zp.common.log.annotation.SysLog;
+import com.zp.common.log.annotation.SysModule;
 import com.zp.common.security.annotation.RequiresPermissions;
 import com.zp.module.sys.service.RoleMenuService;
 import io.swagger.annotations.Api;
@@ -58,6 +60,7 @@ public class RoleMenuController {
     /**
      * 保存
      */
+    @SysLog(value = "保存角色和菜单关系",system= SysModule.sys)
     @PostMapping("/save")
     @RequiresPermissions("sys:rolemenu:save")
         @ApiOperation("保存角色系统表信息") 
@@ -70,6 +73,7 @@ public class RoleMenuController {
     /**
      * 修改
      */
+    @SysLog(value = "修改角色和菜单关系",system= SysModule.sys)
     @PostMapping("/update")
     @RequiresPermissions("sys:rolemenu:update")
         @ApiOperation("修改角色系统表信息") 
@@ -82,6 +86,7 @@ public class RoleMenuController {
     /**
      * 删除
      */
+    @SysLog(value = "删除角色和菜单关系",system= SysModule.sys)
     @PostMapping("/delete")
     @RequiresPermissions("sys:rolemenu:delete")
         @ApiOperation("删除角色系统表信息") 
