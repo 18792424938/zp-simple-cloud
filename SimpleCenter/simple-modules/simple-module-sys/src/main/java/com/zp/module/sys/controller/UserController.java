@@ -78,7 +78,6 @@ public class UserController {
     /**
      * 列表
      */
-    @SysLog(value = "用户列表",system = SysModule.sys)
     @GetMapping("/list")
     @ApiOperation("用户表列表")
     @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)

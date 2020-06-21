@@ -55,7 +55,6 @@ public class CommonController {
     /**
      * 缓存列表
      */
-    @SysLog(value = "用户列表",system = SysModule.sys)
     @GetMapping("/redislist")
     @ApiOperation("用户表列表")
     @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)
@@ -97,7 +96,6 @@ public class CommonController {
     /**
      * 在线用户列表
      */
-    @SysLog(value = "在线用户列表",system = SysModule.sys)
     @GetMapping("/onlineuser")
     @ApiOperation("在线用户列表")
     @ApiResponse(code = 0, message = "查询成功", response = UserEntity.class)
