@@ -48,7 +48,7 @@ public class OfficeListener {
 	private FileUploadUtil fileUploadUtil;
 
 
-	@Value("${upload.encode-server}")
+	@Value("${upload.encode-server:''}")
 	private String serverUrl;
 
 
@@ -78,7 +78,7 @@ public class OfficeListener {
 		if(Arrays.asList(new String[]{"doc","docx"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())){//word
 			url = serverUrl.endsWith("/")?serverUrl:(serverUrl+"/")+"office/word2pdfUrlDown?url={url}";
 		}else if(Arrays.asList(new String[]{"xlsx","xls"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())) {//excel
-			url = serverUrl.endsWith("/")?serverUrl:(serverUrl+"/")+"office/excel2pdfUrlDown";
+			url = serverUrl.endsWith("/")?serverUrl:(serverUrl+"/")+"office/excel2pdfUrlDown?url={url}";
 		}else {
 			return;
 		}

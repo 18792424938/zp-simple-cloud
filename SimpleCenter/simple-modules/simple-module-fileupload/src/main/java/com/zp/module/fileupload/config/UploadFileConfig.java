@@ -14,11 +14,13 @@ import org.springframework.core.env.Environment;
 @RefreshScope//需要用http://ip:port/actuator/refresh
 public class UploadFileConfig {
 
-    @Value("${upload.type}")
+    @Value("${upload.type:''}")
     private String type;
 
+    @Value("${upload.local.path:''}")
     private String path;
 
+    @Value("${upload.local.nginx_url:''}")
     private String longinx_url;
 
 
@@ -30,7 +32,7 @@ public class UploadFileConfig {
     private boolean http_anti_steal_token;
     @Value("${upload.fastdfs.http_secret_key:123456}")
     private String http_secret_key;
-    @Value("${upload.fastdfs.nginx_url}")
+    @Value("${upload.fastdfs.nginx_url:''}")
     private String nginx_url;
 
 

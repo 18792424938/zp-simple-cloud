@@ -37,7 +37,7 @@ public class FileUploadUtilLocalImpl implements FileUploadUtil {
         }else if(rootPath.endsWith("\\")){
             this.rootPath = rootPath;
         }else{
-            this.rootPath = rootPath+File.separator;
+            this.rootPath = rootPath+"/";
         }
 
 
@@ -45,16 +45,20 @@ public class FileUploadUtilLocalImpl implements FileUploadUtil {
         this.nginx_url = nginx_url.endsWith("/") ? nginx_url : nginx_url + "/";
     }
 
+
     @Override
     public String uploadFilePreviewPdf(InputStream inputStream,String suffix){
         String yyyyMM = DateUtil.formatData(new Date(),"yyyyMM");
+        String path =yyyyMM+"/"+UUID.randomUUID().toString()+"."+suffix;
+        File file = new File(rootPath+path);
 
-        String path =yyyyMM+File.separator+UUID.randomUUID().toString()+"."+suffix;
-
-        File file1 = new File(rootPath+path);
+        File parentFile = file.getParentFile();
+        if(!parentFile.exists()){
+            parentFile.mkdirs();
+        }
         OutputStream out = null;
         try {
-            out = new FileOutputStream(file1);
+            out = new FileOutputStream(file);
 
             IOUtils.copy(inputStream,out);
         }catch (Exception e){
@@ -89,11 +93,14 @@ public class FileUploadUtilLocalImpl implements FileUploadUtil {
 
             String yyyyMM = DateUtil.formatData(new Date(),"yyyyMM");
 
-
-            String path =yyyyMM+File.separator+UUID.randomUUID().toString()+"."+suffix;
+            String path =yyyyMM+"/"+UUID.randomUUID().toString()+"."+suffix;
 
             File file1 = new File(rootPath+path);
 
+            File parentFile = file1.getParentFile();
+            if(!parentFile.exists()){
+                parentFile.mkdirs();
+            }
             file.transferTo(file1);
 
             UploadFileEntity uploadFileEntity = new UploadFileEntity();

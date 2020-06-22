@@ -36,7 +36,7 @@ import java.util.*;
 @Api(value = "文件-通用", tags = {"文件-通用"})
 public class FileUploadController {
 
-	@Value("${upload.types}")
+	@Value("${upload.types:''}")
 	private String uploadTypes;
 
     @Autowired
