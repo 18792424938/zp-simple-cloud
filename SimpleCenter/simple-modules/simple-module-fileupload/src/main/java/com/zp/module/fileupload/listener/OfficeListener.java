@@ -75,9 +75,9 @@ public class OfficeListener {
 		HttpEntity<Resource> httpEntity = new HttpEntity<Resource>(headers);
 
 		String url = "";
-		if(Arrays.asList(new String[]{"doc","docx"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())){
+		if(Arrays.asList(new String[]{"doc","docx"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())){//word
 			url = serverUrl.endsWith("/")?serverUrl:(serverUrl+"/")+"office/word2pdfUrlDown?url={url}";
-		}else if(Arrays.asList(new String[]{"xlsx","xls"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())) {
+		}else if(Arrays.asList(new String[]{"xlsx","xls"}).contains(uploadFileEntity.getFileSuffix().toLowerCase())) {//excel
 			url = serverUrl.endsWith("/")?serverUrl:(serverUrl+"/")+"office/excel2pdfUrlDown";
 		}else {
 			return;
@@ -93,7 +93,9 @@ public class OfficeListener {
 			inputStream = new ByteArrayInputStream(responseRE.getBody());
 			if(inputStream!=null){
 				//获得流
-				UploadFileEntity uploadFileEntityPdf = fileUploadUtil.uploadFile(inputStream, "pdf");
+				UploadFileEntity uploadFileEntityPdf = new UploadFileEntity();
+				String previewPdf = fileUploadUtil.uploadFilePreviewPdf(inputStream, "pdf");
+				uploadFileEntityPdf.setPreviewUrl(previewPdf);
 				uploadFileEntity.setEncode(UploadEnum.UPLOAD_30.getCode());
 				uploadFileEntity.setEncodeDate(new Date());
 				uploadFileEntity.setPreviewUrl(uploadFileEntityPdf.getPreviewUrl());
@@ -104,7 +106,7 @@ public class OfficeListener {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			uploadFileEntity.setEncode(UploadEnum.UPLOAD_10.getCode());
+			uploadFileEntity.setEncode(UploadEnum.UPLOAD_40.getCode());
 			uploadFileService.updateById(uploadFileEntity);
 		}finally {
 			if(inputStream!=null){

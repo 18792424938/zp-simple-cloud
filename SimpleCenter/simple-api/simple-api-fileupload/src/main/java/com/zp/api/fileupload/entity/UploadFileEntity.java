@@ -101,6 +101,15 @@ public class UploadFileEntity {
     @ApiModelProperty("上传文件产生的组")
     private String groupName;
 
+    /**
+     * fastdfs,local
+     */
+    @TableField("upload_type")
+    @ApiModelProperty("fastdfs,local")
+    private String uploadType;
+
+
+
 
 
 

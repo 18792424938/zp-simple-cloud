@@ -140,8 +140,6 @@ public class FileUploadController {
 	}
 
 
-
-
 	@GetMapping("/fileDown")
 	public void  fileDowload(HttpServletResponse response,HttpServletRequest request,String uuid) {
 		if(StringUtils.isEmpty(uuid)) {
@@ -171,7 +169,6 @@ public class FileUploadController {
             response.setContentType("multipart/form-data");
             response.setCharacterEncoding("UTF-8");
 
-            //通过文件路径获得File对象(假如此路径中有一个download.pdf文件)
             OutputStream os = response.getOutputStream();
             fileUploadUtil.downloadFile(uploadFileEntity, os);
         }catch (Exception e){

@@ -3,7 +3,8 @@ package com.zp.api.fileupload.enums;
 public enum UploadEnum {
     UPLOAD_10(10, "已完成"),
     UPLOAD_20(20, "转码中"),
-    UPLOAD_30(30, "已转码");
+    UPLOAD_30(30, "已转码"),
+    UPLOAD_40(40, "转码失败");
     int code;
     String Name;
 

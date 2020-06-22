@@ -9,6 +9,6 @@ import java.io.Serializable;
 
 public interface FileUploadUtil extends Serializable {
     UploadFileEntity uploadFile(MultipartFile file) ;
-    UploadFileEntity uploadFile(InputStream inputStream,String suffix)  throws Exception;
+    String uploadFilePreviewPdf(InputStream inputStream,String suffix)  throws Exception;
     void downloadFile(UploadFileEntity entity, OutputStream out);
 }

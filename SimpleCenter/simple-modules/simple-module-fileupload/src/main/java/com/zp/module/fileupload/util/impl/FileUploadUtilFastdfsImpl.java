@@ -48,19 +48,13 @@ public class FileUploadUtilFastdfsImpl implements FileUploadUtil {
     }
 
     @Override
-    public UploadFileEntity uploadFile(InputStream inputStream,String suffix) throws Exception {
-
+    public String uploadFilePreviewPdf(InputStream inputStream,String suffix) throws Exception {
 
         byte[] bs = IOUtils.toByteArray(inputStream);
 
-
         String[] resource = storageClient1.upload_file(bs, suffix, null);
 
-        UploadFileEntity uploadFileEntity = new UploadFileEntity();
-
-        uploadFileEntity.setPreviewUrl( nginx_url +  resource[0]+"/"+resource[1]);
-
-        return uploadFileEntity;
+        return  nginx_url +  resource[0]+"/"+resource[1];
     }
 
     @Override
@@ -72,7 +66,6 @@ public class FileUploadUtilFastdfsImpl implements FileUploadUtil {
 
             String suffix = name.substring(name.lastIndexOf(".") + 1);
 
-
             byte[] bs = IOUtils.toByteArray(input);
 
             // 7、直接调用StorageClient对象方法上传文件即可。
@@ -82,6 +75,7 @@ public class FileUploadUtilFastdfsImpl implements FileUploadUtil {
             uploadFileEntity.setGroupName(resource[0]);
             uploadFileEntity.setFileUrl( nginx_url +  resource[0]+"/"+resource[1]);
             uploadFileEntity.setRealName(name);
+            uploadFileEntity.setUploadType("fastdfs");
             uploadFileEntity.setFileSuffix(suffix);
             uploadFileEntity.setFileSize(file.getSize());
             uploadFileEntity.setFileName(resource[1].substring(resource[1].lastIndexOf("/")+1,resource[1].length()));
