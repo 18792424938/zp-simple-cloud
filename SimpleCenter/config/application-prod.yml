@@ -6,7 +6,7 @@ spring:
     druid:
       url: jdbc:postgresql://127.0.0.1:5432/simple_zhaipan
       username: zhaipan
-      password: zhang123456+-
+      password: zhan
       initial-size: 10
       max-active: 30
       min-idle: 10
