@@ -7,7 +7,7 @@ spring:
       #url: jdbc:postgresql://192.168.1.166:7777/gs_wuye
       url: jdbc:postgresql://114.116.17.114:7777/simple_zhaipan
       username: jfwy
-      password: tongruan@123
+      password: 324
       #url: jdbc:postgresql://192.168.0.205:5432/gs_wuye
       #username: gs
       #password: jjxliu306
